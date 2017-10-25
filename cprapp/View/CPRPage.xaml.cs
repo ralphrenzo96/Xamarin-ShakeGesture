@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using cprapp.Helpers.ShakeService;
 using cprapp.Utilities;
@@ -10,12 +11,55 @@ namespace cprapp.View
     public partial class CPRPage : ContentPage
     {
         IShakeService shake = DependencyService.Get<IShakeService>();
+        StopWatch stopWatch = new StopWatch();
+        StopWatch idleWatch = new StopWatch();
         CustomTimer timer = new CustomTimer(2);
+        CustomTimer idleTimer = new CustomTimer(5);
+
         double speed;
+
         public CPRPage()
         {
             InitializeComponent();
+
             timer.Elapsed += CPRIdle;
+            idleTimer.Elapsed += delayIdleTimer;
+            stopWatch.Elapsed += UpdateTimer;
+            idleWatch.Elapsed += IdleTimer;
+
+            StartTimer();
+        }
+
+        public async void StartTimer()
+        {
+            await stopWatch.Start();
+        }
+
+        private async void delayIdleTimer(object sender, EventArgs e)
+        {
+            idleTimer.Stop();
+            await idleWatch.Start();
+
+        }
+
+        private void IdleTimer(object sender, int e)
+        {
+            TimeSpan result = TimeSpan.FromSeconds(e);
+            labelIdle.Text = "Idle Time : " + result.ToString("mm':'ss");
+
+#if DEBUG
+            Debug.WriteLine("[CPRPage.cs] Idle Time : " + e);
+#endif
+        }
+
+        private void UpdateTimer(object sender, int e)
+        {
+            TimeSpan result = TimeSpan.FromSeconds(e);
+            labelWatch.Text = "Elapsed Time : " + result.ToString("mm':'ss");
+
+#if DEBUG
+            Debug.WriteLine("[CPRPage.cs] Update Time : " + e);
+#endif
         }
 
         async void CPRIdle(object sender, EventArgs e)
@@ -23,6 +67,8 @@ namespace cprapp.View
             await progressBarSpeed.ProgressTo(0, 500, Easing.Linear);
             speed = 0;
             timer.Stop();
+
+            await idleTimer.Start();
         }
 
         protected override void OnAppearing()
@@ -30,23 +76,21 @@ namespace cprapp.View
             base.OnAppearing();
             shake.speedObtained += OnSpeedChanged;
 			shake.GetSpeed();
-
-			
 		}
 
         async void OnSpeedChanged(object sender, IShakeServiceEventArgs e)
         {
+            idleWatch.Reset();
+            labelIdle.Text = "Idle Time : 00:00";
+
             if(speed < e.speed)
                 speed = e.speed;
             labelDisplay.Text = speed.ToString() + "\n" + labelDisplay.Text;
 
-            await progressBarSpeed.ProgressTo((speed/3000), 500, Easing.Linear);
-
+            await progressBarSpeed.ProgressTo((speed / 3000), 500, Easing.Linear);
             timer.Stop();
             await timer.Start();
         }
-
-
 
         protected override void OnDisappearing()
         {
@@ -55,14 +99,31 @@ namespace cprapp.View
             shake.Stop();
         }
 
-
-
-        public void GetSpeed_Clicked(Object s, EventArgs args)
+        protected override bool OnBackButtonPressed()
         {
-			//shake.speedObtained += (object sender, IShakeServiceEventArgs e) => speed = e.speed;
-			//shake.GetSpeed();
+			Processes_Disable();
+            return base.OnBackButtonPressed();
+        }
 
-			//labelDisplay.Text = speed.ToString();
+        public void QuitButton_Clicked(Object sender, EventArgs e)
+        {
+            Processes_Disable();
+            Navigation.PopAsync();
+        }
+
+        private void Processes_Disable()
+        {
+#if DEBUG
+			Debug.WriteLine("[CPRPage.cs] Processes Disabled");
+#endif
+            timer.Stop();
+			timer.Elapsed -= CPRIdle;
+            idleTimer.Stop();
+			idleTimer.Elapsed -= delayIdleTimer;
+            stopWatch.Stop();
+			stopWatch.Elapsed -= UpdateTimer;
+            idleWatch.Stop();
+			idleWatch.Elapsed -= IdleTimer;
         }
     }
 }

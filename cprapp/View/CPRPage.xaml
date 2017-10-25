@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="cprapp.View.CPRPage" xmlns:controls="clr-namespace:cprapp.Controls;assembly=cprapp">
-	<StackLayout Padding = "20">
-        <controls:CustomProgressBar Progress = "0" x:Name = "progressBarSpeed" HeightRequest = "20"/>
-        <Label Text = "Speed" x:Name = "labelDisplay" FontSize = "18" TextColor = "Gray" VerticalOptions = "FillAndExpand" HorizontalTextAlignment = "Center" VerticalTextAlignment = "Center"/>
-<!--        <Button Text = "Get Speed" Clicked = "GetSpeed_Clicked"/>-->
+<ContentPage NavigationPage.HasNavigationBar = "false" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="cprapp.View.CPRPage" xmlns:controls="clr-namespace:cprapp.Controls;assembly=cprapp">
+    <StackLayout VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" Padding = "20">
+        <Label Text = "Elpased Time : 00:00" x:Name = "labelWatch" FontSize = "26" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
+        <Label Text = "Idle Time : 00:00" x:Name = "labelIdle" FontSize = "26" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
+       
+        <controls:CustomProgressBar Progress = "0" x:Name = "progressBarSpeed"/>
+       
+        <Label x:Name = "labelDisplay" FontSize = "18" TextColor = "Gray" VerticalOptions = "StartAndExpand" HorizontalTextAlignment = "Center"/>
+        <Button Text = "Quit" Clicked = "QuitButton_Clicked"/>
     </StackLayout>
 </ContentPage>
