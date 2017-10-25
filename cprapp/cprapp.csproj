@@ -50,6 +50,7 @@
     <Compile Include="Helpers\ShakeService\IShakeService.cs" />
     <Compile Include="Utilities\CustomTimer.cs" />
     <Compile Include="Controls\CustomProgressBar.cs" />
+    <Compile Include="Utilities\StopWatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

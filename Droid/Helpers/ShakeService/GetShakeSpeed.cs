@@ -17,6 +17,8 @@ namespace cprapp.Droid.Helpers.ShakeService
 
     public class GetShakeSpeed : Java.Lang.Object, IShakeService, Android.Hardware.ISensorEventListener
     {
+        ShakeSpeedEventArgs args = new ShakeSpeedEventArgs();
+
         public event EventHandler<IShakeServiceEventArgs> speedObtained;
         Android.Hardware.SensorManager sensorManager;
         Sensor sensor;
@@ -70,11 +72,11 @@ namespace cprapp.Droid.Helpers.ShakeService
 
 						if (getSpeed > ShakeThreshold)
 						{
-                            ShakeSpeedEventArgs args = new ShakeSpeedEventArgs();
+                            
                             args.speed = getSpeed;
                             speedObtained(this, args);
 
-                            System.Diagnostics.Debug.WriteLine("Speed : " + getSpeed);
+                            System.Diagnostics.Debug.WriteLine("[GetShakeSpeed.Android] Speed : " + getSpeed);
 						}
 
 						last_x = x;
