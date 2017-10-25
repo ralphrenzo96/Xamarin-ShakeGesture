@@ -46,9 +46,9 @@ namespace cprapp.Utilities
 				await Task.Delay(1000);
 
 				seconds++;
-#if DEBUG
-				Debug.WriteLine("[StopWatch.cs] StopWatch Seconds : " + seconds);
-#endif
+//#if DEBUG
+//				Debug.WriteLine("[StopWatch.cs] StopWatch Seconds : " + seconds);
+//#endif
 			}
 		}
 

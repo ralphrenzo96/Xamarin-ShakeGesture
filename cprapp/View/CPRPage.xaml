@@ -3,10 +3,15 @@
     <StackLayout VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" Padding = "20">
         <Label Text = "Elpased Time : 00:00" x:Name = "labelWatch" FontSize = "26" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
         <Label Text = "Idle Time : 00:00" x:Name = "labelIdle" FontSize = "26" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
-       
-        <controls:CustomProgressBar Progress = "0" x:Name = "progressBarSpeed"/>
-       
-        <Label x:Name = "labelDisplay" FontSize = "18" TextColor = "Gray" VerticalOptions = "StartAndExpand" HorizontalTextAlignment = "Center"/>
-        <Button Text = "Quit" Clicked = "QuitButton_Clicked"/>
+
+        <Frame Padding = "2" BackgroundColor = "White">
+            <controls:CustomProgressBar Progress = "0" x:Name = "progressBarSpeed" BackgroundColor = "White"/>
+        </Frame>
+        
+        <StackLayout Orientation = "Horizontal" Spacing = "0" VerticalOptions = "FillAndExpand">
+            <Label x:Name = "labelRate" FontSize = "18" TextColor = "Gray" VerticalOptions = "StartAndExpand" HorizontalTextAlignment = "Center"/>
+            <Label x:Name = "labelDisplay" FontSize = "18" TextColor = "Gray" VerticalOptions = "StartAndExpand" HorizontalTextAlignment = "Center"/>
+        </StackLayout>
+        <Button Text = "Quit" Clicked = "QuitButton_Clicked" VerticalOptions = "EndAndExpand"/>
     </StackLayout>
 </ContentPage>

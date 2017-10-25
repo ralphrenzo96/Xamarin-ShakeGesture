@@ -47,9 +47,9 @@ namespace cprapp.Utilities
                 await Task.Delay(1000);
 
                 seconds++;
-#if DEBUG
-                Debug.WriteLine("[CustomerTimer.cs] Timer Seconds : " + seconds);
-#endif
+//#if DEBUG
+//                Debug.WriteLine("[CustomerTimer.cs] Timer Seconds : " + seconds);
+//#endif
             }
 		}
 
@@ -60,5 +60,6 @@ namespace cprapp.Utilities
 #endif
 			IsRunning = false;
 		}
+
 	}
 }

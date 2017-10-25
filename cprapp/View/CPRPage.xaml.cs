@@ -13,20 +13,20 @@ namespace cprapp.View
         IShakeService shake = DependencyService.Get<IShakeService>();
         StopWatch stopWatch = new StopWatch();
         StopWatch idleWatch = new StopWatch();
-        CustomTimer timer = new CustomTimer(2);
+        CustomTimer timer = new CustomTimer(1);
         CustomTimer idleTimer = new CustomTimer(5);
 
         double speed;
+        bool isNotBusy = true;
 
         public CPRPage()
         {
             InitializeComponent();
-
+			AnimateProgressBar();
             timer.Elapsed += CPRIdle;
             idleTimer.Elapsed += delayIdleTimer;
             stopWatch.Elapsed += UpdateTimer;
             idleWatch.Elapsed += IdleTimer;
-
             StartTimer();
         }
 
@@ -39,7 +39,6 @@ namespace cprapp.View
         {
             idleTimer.Stop();
             await idleWatch.Start();
-
         }
 
         private void IdleTimer(object sender, int e)
@@ -47,9 +46,9 @@ namespace cprapp.View
             TimeSpan result = TimeSpan.FromSeconds(e);
             labelIdle.Text = "Idle Time : " + result.ToString("mm':'ss");
 
-#if DEBUG
-            Debug.WriteLine("[CPRPage.cs] Idle Time : " + e);
-#endif
+//#if DEBUG
+//            Debug.WriteLine("[CPRPage.cs] Idle Time : " + e);
+//#endif
         }
 
         private void UpdateTimer(object sender, int e)
@@ -57,17 +56,17 @@ namespace cprapp.View
             TimeSpan result = TimeSpan.FromSeconds(e);
             labelWatch.Text = "Elapsed Time : " + result.ToString("mm':'ss");
 
-#if DEBUG
-            Debug.WriteLine("[CPRPage.cs] Update Time : " + e);
-#endif
+//#if DEBUG
+//            Debug.WriteLine("[CPRPage.cs] Update Time : " + e);
+//#endif
         }
 
         async void CPRIdle(object sender, EventArgs e)
         {
+            timer.Stop();
             await progressBarSpeed.ProgressTo(0, 500, Easing.Linear);
             speed = 0;
-            timer.Stop();
-
+            progressBarSpeed.SpeedResetUpdate.Invoke(this, true);
             await idleTimer.Start();
         }
 
@@ -80,16 +79,23 @@ namespace cprapp.View
 
         async void OnSpeedChanged(object sender, IShakeServiceEventArgs e)
         {
-            idleWatch.Reset();
-            labelIdle.Text = "Idle Time : 00:00";
+            if (isNotBusy)
+            {
+                isNotBusy = false;
+                timer.Stop();
+                if (e.speed > speed)
+                {
+                    speed = e.speed;
+                    progressBarSpeed.CurrentSpeedUpdate.Invoke(this, Convert.ToInt32(speed));
+                    labelDisplay.Text = "Depth : " + (Math.Round((speed / 1000), 2)).ToString() + "''\n" + labelDisplay.Text;
+                    await progressBarSpeed.ProgressTo((speed / 3000), 500, Easing.Linear);
+                }
 
-            if(speed < e.speed)
-                speed = e.speed;
-            labelDisplay.Text = speed.ToString() + "\n" + labelDisplay.Text;
-
-            await progressBarSpeed.ProgressTo((speed / 3000), 500, Easing.Linear);
-            timer.Stop();
-            await timer.Start();
+                idleWatch.Reset();
+                labelIdle.Text = "Idle Time : 00:00";
+                await timer.Start();
+                isNotBusy = true;
+            }
         }
 
         protected override void OnDisappearing()
@@ -124,6 +130,16 @@ namespace cprapp.View
 			stopWatch.Elapsed -= UpdateTimer;
             idleWatch.Stop();
 			idleWatch.Elapsed -= IdleTimer;
+        }
+
+        public async void AnimateProgressBar()
+        {
+            while(true)
+            {
+                progressBarSpeed.Opacity = 0;
+                await progressBarSpeed.FadeTo(1, 500);
+                await progressBarSpeed.FadeTo(0, 500);
+            }
         }
     }
 }
