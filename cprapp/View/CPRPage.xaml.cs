@@ -13,7 +13,7 @@ namespace cprapp.View
         IShakeService shake = DependencyService.Get<IShakeService>();
         StopWatch stopWatch = new StopWatch();
         StopWatch idleWatch = new StopWatch();
-        CustomTimer timer = new CustomTimer(1);
+        CustomTimer timer = new CustomTimer(3);
         CustomTimer idleTimer = new CustomTimer(5);
 
         double speed;
@@ -138,7 +138,7 @@ namespace cprapp.View
             {
                 progressBarSpeed.Opacity = 0;
                 await progressBarSpeed.FadeTo(1, 500);
-                await progressBarSpeed.FadeTo(0, 500);
+                await progressBarSpeed.FadeTo(0, 1000);
             }
         }
     }

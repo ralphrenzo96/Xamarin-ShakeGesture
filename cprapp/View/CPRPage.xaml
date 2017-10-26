@@ -4,8 +4,11 @@
         <Label Text = "Elpased Time : 00:00" x:Name = "labelWatch" FontSize = "26" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
         <Label Text = "Idle Time : 00:00" x:Name = "labelIdle" FontSize = "26" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
 
-        <Frame Padding = "2" BackgroundColor = "White">
-            <controls:CustomProgressBar Progress = "0" x:Name = "progressBarSpeed" BackgroundColor = "White"/>
+        <Frame Padding = "5" BackgroundColor = "White">
+            <StackLayout Spacing = "4">
+                <controls:CustomProgressBar Progress = "0" x:Name = "progressBarSpeed" BackgroundColor = "White"/>
+                <Image Source = "meter" HorizontalOptions = "FillAndExpand"/>
+            </StackLayout>
         </Frame>
         
         <StackLayout Orientation = "Horizontal" Spacing = "0" VerticalOptions = "FillAndExpand">
