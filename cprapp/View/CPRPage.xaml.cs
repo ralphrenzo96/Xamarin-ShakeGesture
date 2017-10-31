@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using cprapp.Helpers.ShakeService;
+using cprapp.Helpers.TickingService;
 using cprapp.Utilities;
 using Xamarin.Forms;
 
@@ -13,7 +14,8 @@ namespace cprapp.View
         IShakeService shake = DependencyService.Get<IShakeService>();
         StopWatch stopWatch = new StopWatch();
         StopWatch idleWatch = new StopWatch();
-        CustomTimer timer = new CustomTimer(3);
+        TickingWatch tickingWatch = new TickingWatch();
+        CustomTimer timer = new CustomTimer(1);
         CustomTimer idleTimer = new CustomTimer(5);
 
         double speed;
@@ -26,20 +28,30 @@ namespace cprapp.View
             timer.Elapsed += CPRIdle;
             idleTimer.Elapsed += delayIdleTimer;
             stopWatch.Elapsed += UpdateTimer;
+            tickingWatch.Elapsed += PlayTick;
             idleWatch.Elapsed += IdleTimer;
-            StartTimer();
+
+            stopWatch.Start();
+            tickingWatch.Start();
+            //StartWatch();
         }
 
-        public async void StartTimer()
-        {
-            await stopWatch.Start();
-        }
+        //public async void StartWatch()
+        //{
+        //    await stopWatch.Start();
+        //    await tickingWatch.Start();
+        //}
 
         private async void delayIdleTimer(object sender, EventArgs e)
         {
             idleTimer.Stop();
             await idleWatch.Start();
         }
+
+		private void PlayTick(object sender, int e)
+		{
+			DependencyService.Get<ITickingService>().PlayMP3(1);
+		}
 
         private void IdleTimer(object sender, int e)
         {
@@ -55,7 +67,6 @@ namespace cprapp.View
         {
             TimeSpan result = TimeSpan.FromSeconds(e);
             labelWatch.Text = "Elapsed Time : " + result.ToString("mm':'ss");
-
 //#if DEBUG
 //            Debug.WriteLine("[CPRPage.cs] Update Time : " + e);
 //#endif
@@ -128,6 +139,8 @@ namespace cprapp.View
 			idleTimer.Elapsed -= delayIdleTimer;
             stopWatch.Stop();
 			stopWatch.Elapsed -= UpdateTimer;
+            tickingWatch.Stop();
+			tickingWatch.Elapsed -= UpdateTimer;
             idleWatch.Stop();
 			idleWatch.Elapsed -= IdleTimer;
         }

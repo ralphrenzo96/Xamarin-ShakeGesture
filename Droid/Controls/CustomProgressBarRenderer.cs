@@ -42,8 +42,6 @@ namespace cprapp.Droid.Controls
 
         private void ChangeTint(object sender, int e)
         {
-
-            System.Diagnostics.Debug.WriteLine("*********** Progress " + e);
             if(e <= 2000)
 				Control.ProgressDrawable.SetColorFilter(Color.Red.ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcIn);
 		    else
