@@ -118,6 +118,7 @@
     <AndroidResource Include="Resources\drawable\hands.png" />
     <AndroidResource Include="Resources\drawable\meter.png" />
     <AndroidResource Include="Resources\drawable\body.png" />
+    <AndroidResource Include="Resources\drawable\human_body.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
