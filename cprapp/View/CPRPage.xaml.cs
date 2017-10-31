@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using cprapp.Helpers.AudioService;
 using cprapp.Helpers.ShakeService;
 using cprapp.Helpers.TickingService;
 using cprapp.Utilities;
@@ -34,12 +35,12 @@ namespace cprapp.View
             tickingWatch.Elapsed += PlayTick;
             idleWatch.Elapsed += IdleTimer;
 
-			// Starting Audio
-            //DependencyService.Get<ITickingService>().PlayMP3(true);
-
             stopWatch.Start();
             tickingWatch.Start();
             AnimateHands();
+
+			// Starting Audio
+			DependencyService.Get<IAudioService>().PlayMP3(1);
             //StartWatch();
         }
 
@@ -49,14 +50,15 @@ namespace cprapp.View
         //    await tickingWatch.Start();
         //}
 
-        private async void delayIdleTimer(object sender, EventArgs e)
+        private void delayIdleTimer(object sender, EventArgs e)
         {
             idleTimer.Stop();
-            await idleWatch.Start();
+            idleWatch.Start();
         }
 
 		private void PlayTick(object sender, int e)
 		{
+            Debug.WriteLine("Tick Started");
 			DependencyService.Get<ITickingService>().PlayMP3(true);
 		}
 
@@ -107,19 +109,15 @@ namespace cprapp.View
 
                     int lvl = 0;
                     if (speed <= 2000)
-                    {
                         lvl = 1;
-                        //DependencyService.Get<ITickingService>().PlayMP3(3);
-                    }
                     else
-                    {
                         lvl = 2;
-                        //DependencyService.Get<ITickingService>().PlayMP3(4);
-                    }
+                     
 
                     progressBarSpeed.CurrentSpeedUpdate.Invoke(this, lvl);
                     labelDisplay.Text = (Math.Round((speed / 1000), 2)).ToString();
                     await progressBarSpeed.ProgressTo((speed / 3000), 500, Easing.Linear);
+					DependencyService.Get<IAudioService>().PlayMP3(++lvl);
                 }
 
                 idleWatch.Reset();
@@ -142,10 +140,13 @@ namespace cprapp.View
             return base.OnBackButtonPressed();
         }
 
-        public void QuitButton_Clicked(Object sender, EventArgs e)
+        public async void QuitButton_Clicked(Object sender, EventArgs e)
         {
-            Processes_Disable();
-            Navigation.PopAsync();
+            if (await DisplayActionSheet("CPR Practice", "No", "Yes", "Are you sure you want to quit?") == "Yes")
+            {
+                Processes_Disable();
+                await Navigation.PopAsync();
+            }
         }
 
         private void Processes_Disable()

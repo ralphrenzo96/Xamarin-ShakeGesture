@@ -3,6 +3,6 @@ namespace cprapp.Helpers.TickingService
 {
     public interface ITickingService
     {
-        bool PlayMP3(bool isUsing);
+        void PlayMP3(bool isUsing);
     }
 }

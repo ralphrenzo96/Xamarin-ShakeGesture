@@ -95,6 +95,7 @@
     <Compile Include="Helpers\ShakeService\GetShakeSpeed.cs" />
     <Compile Include="Controls\CustomProgressBarRenderer.cs" />
     <Compile Include="Helpers\TickingService\TickingService.cs" />
+    <Compile Include="Helpers\AudioService\AudioService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -115,8 +116,8 @@
     <AndroidResource Include="Resources\raw\harder.mp3" />
     <AndroidResource Include="Resources\raw\faster.mp3" />
     <AndroidResource Include="Resources\drawable\hands.png" />
-    <AndroidResource Include="Resources\drawable\body.png" />
     <AndroidResource Include="Resources\drawable\meter.png" />
+    <AndroidResource Include="Resources\drawable\body.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
@@ -124,6 +125,7 @@
     <Folder Include="Controls\" />
     <Folder Include="Helpers\TickingService\" />
     <Folder Include="Resources\raw\" />
+    <Folder Include="Helpers\AudioService\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />
