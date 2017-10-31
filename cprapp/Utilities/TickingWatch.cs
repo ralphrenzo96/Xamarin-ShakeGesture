@@ -43,7 +43,7 @@ namespace cprapp.Utilities
 				{
 					OnTimerElapsed();
 				}
-				await Task.Delay(600);
+				await Task.Delay(550);
 
 				seconds++;
 				//#if DEBUG

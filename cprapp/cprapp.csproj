@@ -53,6 +53,8 @@
     <Compile Include="Utilities\StopWatch.cs" />
     <Compile Include="Helpers\TickingService\ITickingService.cs" />
     <Compile Include="Utilities\TickingWatch.cs" />
+    <Compile Include="Utilities\Constants.cs" />
+    <Compile Include="Controls\CustomNavImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

@@ -24,15 +24,22 @@ namespace cprapp.View
         public CPRPage()
         {
             InitializeComponent();
+
 			AnimateProgressBar();
+
+
             timer.Elapsed += CPRIdle;
             idleTimer.Elapsed += delayIdleTimer;
             stopWatch.Elapsed += UpdateTimer;
             tickingWatch.Elapsed += PlayTick;
             idleWatch.Elapsed += IdleTimer;
 
+			// Starting Audio
+            //DependencyService.Get<ITickingService>().PlayMP3(true);
+
             stopWatch.Start();
             tickingWatch.Start();
+            AnimateHands();
             //StartWatch();
         }
 
@@ -50,13 +57,13 @@ namespace cprapp.View
 
 		private void PlayTick(object sender, int e)
 		{
-			DependencyService.Get<ITickingService>().PlayMP3(1);
+			DependencyService.Get<ITickingService>().PlayMP3(true);
 		}
 
         private void IdleTimer(object sender, int e)
         {
             TimeSpan result = TimeSpan.FromSeconds(e);
-            labelIdle.Text = "Idle Time : " + result.ToString("mm':'ss");
+            labelIdle.Text = result.ToString("mm':'ss");
 
 //#if DEBUG
 //            Debug.WriteLine("[CPRPage.cs] Idle Time : " + e);
@@ -66,7 +73,7 @@ namespace cprapp.View
         private void UpdateTimer(object sender, int e)
         {
             TimeSpan result = TimeSpan.FromSeconds(e);
-            labelWatch.Text = "Elapsed Time : " + result.ToString("mm':'ss");
+            labelWatch.Text = result.ToString("mm':'ss");
 //#if DEBUG
 //            Debug.WriteLine("[CPRPage.cs] Update Time : " + e);
 //#endif
@@ -97,13 +104,26 @@ namespace cprapp.View
                 if (e.speed > speed)
                 {
                     speed = e.speed;
-                    progressBarSpeed.CurrentSpeedUpdate.Invoke(this, Convert.ToInt32(speed));
-                    labelDisplay.Text = "Depth : " + (Math.Round((speed / 1000), 2)).ToString() + "''\n" + labelDisplay.Text;
+
+                    int lvl = 0;
+                    if (speed <= 2000)
+                    {
+                        lvl = 1;
+                        //DependencyService.Get<ITickingService>().PlayMP3(3);
+                    }
+                    else
+                    {
+                        lvl = 2;
+                        //DependencyService.Get<ITickingService>().PlayMP3(4);
+                    }
+
+                    progressBarSpeed.CurrentSpeedUpdate.Invoke(this, lvl);
+                    labelDisplay.Text = (Math.Round((speed / 1000), 2)).ToString();
                     await progressBarSpeed.ProgressTo((speed / 3000), 500, Easing.Linear);
                 }
 
                 idleWatch.Reset();
-                labelIdle.Text = "Idle Time : 00:00";
+                labelIdle.Text = "00:00";
                 await timer.Start();
                 isNotBusy = true;
             }
@@ -143,6 +163,8 @@ namespace cprapp.View
 			tickingWatch.Elapsed -= UpdateTimer;
             idleWatch.Stop();
 			idleWatch.Elapsed -= IdleTimer;
+
+            DependencyService.Get<ITickingService>().PlayMP3(false);
         }
 
         public async void AnimateProgressBar()
@@ -154,5 +176,14 @@ namespace cprapp.View
                 await progressBarSpeed.FadeTo(0, 1000);
             }
         }
+
+		public async void AnimateHands()
+		{
+			while (true)
+			{
+                await imageHands.ScaleTo(1.5, 250);
+                await imageHands.ScaleTo(1, 250);
+			}
+		}
     }
 }

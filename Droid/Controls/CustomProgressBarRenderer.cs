@@ -42,10 +42,15 @@ namespace cprapp.Droid.Controls
 
         private void ChangeTint(object sender, int e)
         {
-            if(e <= 2000)
-				Control.ProgressDrawable.SetColorFilter(Color.Red.ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcIn);
-		    else
-                Control.ProgressDrawable.SetColorFilter(Color.YellowGreen.ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcIn);
+            switch(e)
+            {
+                case 1 :
+                    Control.ProgressDrawable.SetColorFilter(Color.Red.ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcIn);
+                    break;
+                case 2 :
+                    Control.ProgressDrawable.SetColorFilter(Color.YellowGreen.ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcIn);
+                    break;
+            }
 		}
     }
 }

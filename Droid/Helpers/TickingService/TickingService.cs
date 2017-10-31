@@ -9,17 +9,20 @@ namespace cprapp.Droid.Helpers.TickingService
 {
     public class TickingService : ITickingService
     {
-        private MediaPlayer _mediaPlayer;
+        private MediaPlayer _mediaPlayer = MediaPlayer.Create(Android.App.Application.Context, Resource.Raw.tick);
 
-        public bool PlayMP3(int file)
+        public bool PlayMP3(bool isUsing)
         {
-            switch (file)
+            if (isUsing)
             {
-                case 1 : _mediaPlayer = MediaPlayer.Create(global::Android.App.Application.Context, Resource.Raw.tick);
-                    break;
+                System.Diagnostics.Debug.WriteLine("Start");
+                _mediaPlayer.Start();
             }
-                
-			_mediaPlayer.Start();
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Stop");
+                _mediaPlayer.Stop();
+            }
 
 			return true;
         }

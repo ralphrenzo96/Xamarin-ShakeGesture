@@ -1,20 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage NavigationPage.HasNavigationBar = "false" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="cprapp.View.CPRPage" xmlns:controls="clr-namespace:cprapp.Controls;assembly=cprapp">
-    <StackLayout VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" Padding = "20">
-        <Label Text = "Elpased Time : 00:00" x:Name = "labelWatch" FontSize = "26" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
-        <Label Text = "Idle Time : 00:00" x:Name = "labelIdle" FontSize = "26" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
+<ContentPage BackgroundColor = "White" NavigationPage.HasNavigationBar = "false" xmlns:utilities="clr-namespace:cprapp.Utilities;assembly=cprapp" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="cprapp.View.CPRPage" xmlns:controls="clr-namespace:cprapp.Controls;assembly=cprapp">
+    <Grid>
+        <StackLayout Grid.Row = "0" VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" Spacing = "0">
+            <Grid RowSpacing = "0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="7*" />
+                    <RowDefinition Height="3*" />
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row = "0">
+                    <Image Source = "body" VerticalOptions = "CenterAndExpand" HorizontalOptions = "CenterAndExpand"/>
+                </StackLayout>
 
-        <Frame Padding = "5" BackgroundColor = "White">
-            <StackLayout Spacing = "4">
-                <controls:CustomProgressBar Progress = "0" x:Name = "progressBarSpeed" BackgroundColor = "White"/>
-                <Image Source = "meter" HorizontalOptions = "FillAndExpand"/>
-            </StackLayout>
-        </Frame>
-        
-        <StackLayout Orientation = "Horizontal" Spacing = "0" VerticalOptions = "FillAndExpand">
-            <Label x:Name = "labelRate" FontSize = "18" TextColor = "Gray" VerticalOptions = "StartAndExpand" HorizontalTextAlignment = "Center"/>
-            <Label x:Name = "labelDisplay" FontSize = "18" TextColor = "Gray" VerticalOptions = "StartAndExpand" HorizontalTextAlignment = "Center"/>
+                <StackLayout Grid.Row = "0" VerticalOptions = "CenterAndExpand">
+                    <Image Source = "hands" HeightRequest = "80" x:Name = "imageHands"/>
+                </StackLayout>
+                
+                <Frame Margin = "40,0" Padding = "5" Grid.Row = "1" VerticalOptions = "End">
+                    <StackLayout Spacing = "0">
+                        <controls:CustomProgressBar Progress = "0" x:Name = "progressBarSpeed" BackgroundColor = "White"/>
+                        <Image Source = "meter" HorizontalOptions = "End" HeightRequest = "50"/>
+                    </StackLayout>
+                </Frame>
+            </Grid>
         </StackLayout>
-        <Button Text = "Quit" Clicked = "QuitButton_Clicked" VerticalOptions = "EndAndExpand"/>
-    </StackLayout>
+        
+        <StackLayout Grid.Row = "0" VerticalOptions = "FillAndExpand" Spacing = "0" HorizontalOptions = "End">
+            <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5" BackgroundColor = "Teal">
+                <Label Text = "Elapsed Time" TextColor = "White" FontSize = "12" HorizontalTextAlignment = "Center" />
+                <Label Text = "00:00" x:Name = "labelWatch" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
+            </StackLayout>
+
+            <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5" BackgroundColor = "Teal">
+                <Label Text = "Idle Time" TextColor = "White" FontSize = "12" HorizontalTextAlignment = "Center" />
+                <Label Text = "00:00" x:Name = "labelIdle" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
+            </StackLayout>
+
+            <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5" BackgroundColor = "Teal">
+                <Label Text = "Depth" TextColor = "White" FontSize = "12" HorizontalTextAlignment = "Center" />
+                <Label Text = "0" x:Name = "labelDisplay" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
+            </StackLayout>
+
+             <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5" BackgroundColor = "Teal">
+                <Label Text = "Rate" TextColor = "White" FontSize = "12" HorizontalTextAlignment = "Center" />
+                <Label Text = "0" x:Name = "labelRate" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
+            </StackLayout>
+
+            <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5" BackgroundColor = "Teal">
+                <Button Text = "Done" Clicked = "QuitButton_Clicked" VerticalOptions = "EndAndExpand" BackgroundColor = "Red" TextColor = "White"/>
+            </StackLayout>             
+        </StackLayout>
+    </Grid>
 </ContentPage>
