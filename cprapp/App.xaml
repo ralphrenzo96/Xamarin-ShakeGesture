@@ -1,6 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="cprapp.App">
+<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:utilities="clr-namespace:cprapp.Utilities;assembly=cprapp" xmlns:controls="clr-namespace:cprapp.Controls;assembly=cprapp" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="cprapp.App">
 	<Application.Resources>
-		<!-- Application resource dictionary -->
-	</Application.Resources>
+        <ResourceDictionary>
+
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

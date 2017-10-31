@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using cprapp.Helpers.AudioService;
 using cprapp.Helpers.ShakeService;
+using cprapp.Helpers.TickingService;
 using cprapp.Utilities;
 using Xamarin.Forms;
 
@@ -13,7 +15,8 @@ namespace cprapp.View
         IShakeService shake = DependencyService.Get<IShakeService>();
         StopWatch stopWatch = new StopWatch();
         StopWatch idleWatch = new StopWatch();
-        CustomTimer timer = new CustomTimer(3);
+        TickingWatch tickingWatch = new TickingWatch();
+        CustomTimer timer = new CustomTimer(1);
         CustomTimer idleTimer = new CustomTimer(5);
 
         double speed;
@@ -22,29 +25,47 @@ namespace cprapp.View
         public CPRPage()
         {
             InitializeComponent();
+
 			AnimateProgressBar();
+
+
             timer.Elapsed += CPRIdle;
             idleTimer.Elapsed += delayIdleTimer;
             stopWatch.Elapsed += UpdateTimer;
+            tickingWatch.Elapsed += PlayTick;
             idleWatch.Elapsed += IdleTimer;
-            StartTimer();
+
+            stopWatch.Start();
+            tickingWatch.Start();
+            AnimateHands();
+
+			// Starting Audio
+			DependencyService.Get<IAudioService>().PlayMP3(1);
+            //StartWatch();
         }
 
-        public async void StartTimer()
-        {
-            await stopWatch.Start();
-        }
+        //public async void StartWatch()
+        //{
+        //    await stopWatch.Start();
+        //    await tickingWatch.Start();
+        //}
 
-        private async void delayIdleTimer(object sender, EventArgs e)
+        private void delayIdleTimer(object sender, EventArgs e)
         {
             idleTimer.Stop();
-            await idleWatch.Start();
+            idleWatch.Start();
         }
+
+		private void PlayTick(object sender, int e)
+		{
+            Debug.WriteLine("Tick Started");
+			DependencyService.Get<ITickingService>().PlayMP3(true);
+		}
 
         private void IdleTimer(object sender, int e)
         {
             TimeSpan result = TimeSpan.FromSeconds(e);
-            labelIdle.Text = "Idle Time : " + result.ToString("mm':'ss");
+            labelIdle.Text = result.ToString("mm':'ss");
 
 //#if DEBUG
 //            Debug.WriteLine("[CPRPage.cs] Idle Time : " + e);
@@ -54,8 +75,7 @@ namespace cprapp.View
         private void UpdateTimer(object sender, int e)
         {
             TimeSpan result = TimeSpan.FromSeconds(e);
-            labelWatch.Text = "Elapsed Time : " + result.ToString("mm':'ss");
-
+            labelWatch.Text = result.ToString("mm':'ss");
 //#if DEBUG
 //            Debug.WriteLine("[CPRPage.cs] Update Time : " + e);
 //#endif
@@ -86,13 +106,22 @@ namespace cprapp.View
                 if (e.speed > speed)
                 {
                     speed = e.speed;
-                    progressBarSpeed.CurrentSpeedUpdate.Invoke(this, Convert.ToInt32(speed));
-                    labelDisplay.Text = "Depth : " + (Math.Round((speed / 1000), 2)).ToString() + "''\n" + labelDisplay.Text;
+
+                    int lvl = 0;
+                    if (speed <= 2000)
+                        lvl = 1;
+                    else
+                        lvl = 2;
+                     
+
+                    progressBarSpeed.CurrentSpeedUpdate.Invoke(this, lvl);
+                    labelDisplay.Text = (Math.Round((speed / 1000), 2)).ToString();
                     await progressBarSpeed.ProgressTo((speed / 3000), 500, Easing.Linear);
+					DependencyService.Get<IAudioService>().PlayMP3(++lvl);
                 }
 
                 idleWatch.Reset();
-                labelIdle.Text = "Idle Time : 00:00";
+                labelIdle.Text = "00:00";
                 await timer.Start();
                 isNotBusy = true;
             }
@@ -111,10 +140,13 @@ namespace cprapp.View
             return base.OnBackButtonPressed();
         }
 
-        public void QuitButton_Clicked(Object sender, EventArgs e)
+        public async void QuitButton_Clicked(Object sender, EventArgs e)
         {
-            Processes_Disable();
-            Navigation.PopAsync();
+            if (await DisplayActionSheet("CPR Practice", "No", "Yes", "Are you sure you want to quit?") == "Yes")
+            {
+                Processes_Disable();
+                await Navigation.PopAsync();
+            }
         }
 
         private void Processes_Disable()
@@ -128,8 +160,12 @@ namespace cprapp.View
 			idleTimer.Elapsed -= delayIdleTimer;
             stopWatch.Stop();
 			stopWatch.Elapsed -= UpdateTimer;
+            tickingWatch.Stop();
+			tickingWatch.Elapsed -= UpdateTimer;
             idleWatch.Stop();
 			idleWatch.Elapsed -= IdleTimer;
+
+            DependencyService.Get<ITickingService>().PlayMP3(false);
         }
 
         public async void AnimateProgressBar()
@@ -141,5 +177,14 @@ namespace cprapp.View
                 await progressBarSpeed.FadeTo(0, 1000);
             }
         }
+
+		public async void AnimateHands()
+		{
+			while (true)
+			{
+                await imageHands.ScaleTo(1.5, 250);
+                await imageHands.ScaleTo(1, 250);
+			}
+		}
     }
 }
