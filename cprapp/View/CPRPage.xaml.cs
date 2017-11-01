@@ -19,75 +19,99 @@ namespace cprapp.View
         CustomTimer timer = new CustomTimer(3);
         CustomTimer idleTimer = new CustomTimer(5);
 
-        double speed;
-        bool isNotBusy = true;
+
+        double speed = 0;
+        bool isNotBusy = true, isActive = true;
         int goodDepths = 0;
 
         public CPRPage()
         {
             InitializeComponent();
 
-			AnimateProgressBar();
-
-
+            // Methods
             timer.Elapsed += CPRIdle;
             idleTimer.Elapsed += delayIdleTimer;
             stopWatch.Elapsed += UpdateTimer;
             tickingWatch.Elapsed += PlayTick;
             idleWatch.Elapsed += IdleTimer;
 
+            // Audio
+            DependencyService.Get<IAudioService>().PlayMP3(1);
+
+            // Watch
             stopWatch.Start();
             tickingWatch.Start();
-            AnimateHands();
 
-			// Starting Audio
-			DependencyService.Get<IAudioService>().PlayMP3(1);
-            //StartWatch();
+            // Animations
+            AnimateProgressBar();
+            AnimateHands();
         }
 
-        //public async void StartWatch()
+        //private void Reset()
         //{
-        //    await stopWatch.Start();
-        //    await tickingWatch.Start();
+        //    //idleWatch.Reset();
+        //    //DependencyService.Get<ITickingService>().PlayMP3(true);
+        //    labelRemark.Text = string.Empty;
+        //    labelDisplay.Text = "0";
+        //    labelRate.Text = "0";
+        //    labelIdle.Text = "00:00";
+        //    //isActive = true;
+        //    //AnimateHands();
+        //    speed = 0;
+        //    //idleWatch.Start();
+        //    tickingWatch.Start();
         //}
+
+        private void OnActive(bool isUserActive)
+        {
+            isActive = isUserActive;
+           
+            if(isUserActive)
+            {
+                
+            }
+            else
+            {
+                
+            }
+        }
 
         private void delayIdleTimer(object sender, EventArgs e)
         {
             idleTimer.Stop();
             idleWatch.Start();
+			OnActive(false);
         }
 
 		private void PlayTick(object sender, int e)
 		{
-            Debug.WriteLine("Tick Started");
-			DependencyService.Get<ITickingService>().PlayMP3(true);
+            DependencyService.Get<ITickingService>().PlayMP3(isActive);
 		}
 
-        private void IdleTimer(object sender, int e)
+        private async void IdleTimer(object sender, int e)
         {
             TimeSpan result = TimeSpan.FromSeconds(e);
             labelIdle.Text = result.ToString("mm':'ss");
+                       
+			await progressBarSpeed.ProgressTo(0, 500, Easing.Linear);
+            speed = 0;
+			progressBarSpeed.SpeedResetUpdate.Invoke(this, true);
 
-//#if DEBUG
-//            Debug.WriteLine("[CPRPage.cs] Idle Time : " + e);
-//#endif
-        }
+		}
 
         private void UpdateTimer(object sender, int e)
         {
             TimeSpan result = TimeSpan.FromSeconds(e);
             labelWatch.Text = result.ToString("mm':'ss");
-//#if DEBUG
-//            Debug.WriteLine("[CPRPage.cs] Update Time : " + e);
-//#endif
+
+			
         }
 
         async void CPRIdle(object sender, EventArgs e)
         {
             timer.Stop();
-            await progressBarSpeed.ProgressTo(0, 500, Easing.Linear);
+
             speed = 0;
-            progressBarSpeed.SpeedResetUpdate.Invoke(this, true);
             await idleTimer.Start();
         }
 
@@ -100,6 +124,8 @@ namespace cprapp.View
 
         async void OnSpeedChanged(object sender, IShakeServiceEventArgs e)
         {
+            OnActive(true);
+
             if (isNotBusy)
             {
                 isNotBusy = false;
@@ -119,26 +145,22 @@ namespace cprapp.View
                     {
                         switch (goodDepths)
                         {
-                            case 2 :
-								lvl = 3;
-								labelRemark.Text = "Good Depth";
+                            case 2:
+                                lvl = 3;
+                                labelRemark.Text = "Good Depth";
                                 break;
-                            default :
-								lvl = 2;
-								labelRemark.Text = "Push Faster";
+                            default:
+                                lvl = 2;
+                                labelRemark.Text = "Push Faster";
                                 goodDepths++;
                                 break;
                         }
-
                     }
-                     
-
                     progressBarSpeed.CurrentSpeedUpdate.Invoke(this, lvl);
                     labelDisplay.Text = (Math.Round((speed / 1000), 2)).ToString();
                     await progressBarSpeed.ProgressTo((speed / 3000), 500, Easing.Linear);
 					DependencyService.Get<IAudioService>().PlayMP3(++lvl);
                 }
-
                 idleWatch.Reset();
                 labelIdle.Text = "00:00";
                 await timer.Start();
@@ -200,11 +222,19 @@ namespace cprapp.View
 
 		public async void AnimateHands()
 		{
-			while (true)
-			{
-                await imageHands.ScaleTo(1.5, 250);
+            double scale;
+
+            while (true)
+            {
+                if (!isActive)
+                    scale = 1;
+                else
+                    scale = 1.5;
+                
+                await imageHands.ScaleTo(scale, 250);
                 await imageHands.ScaleTo(1, 250);
-			}
+                
+            }
 		}
     }
 }

@@ -42,6 +42,7 @@ namespace cprapp.Droid.Controls
 
         private void ChangeTint(object sender, int e)
         {
+
             switch(e)
             {
                 case 1 :
