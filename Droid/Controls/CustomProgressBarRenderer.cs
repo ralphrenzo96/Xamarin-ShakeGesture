@@ -48,6 +48,7 @@ namespace cprapp.Droid.Controls
                     Control.ProgressDrawable.SetColorFilter(Color.Red.ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcIn);
                     break;
                 case 2 :
+                case 3 :
                     Control.ProgressDrawable.SetColorFilter(Color.YellowGreen.ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcIn);
                     break;
             }

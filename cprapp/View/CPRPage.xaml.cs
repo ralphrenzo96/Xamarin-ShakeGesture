@@ -16,11 +16,12 @@ namespace cprapp.View
         StopWatch stopWatch = new StopWatch();
         StopWatch idleWatch = new StopWatch();
         TickingWatch tickingWatch = new TickingWatch();
-        CustomTimer timer = new CustomTimer(1);
+        CustomTimer timer = new CustomTimer(3);
         CustomTimer idleTimer = new CustomTimer(5);
 
         double speed;
         bool isNotBusy = true;
+        int goodDepths = 0;
 
         public CPRPage()
         {
@@ -103,15 +104,33 @@ namespace cprapp.View
             {
                 isNotBusy = false;
                 timer.Stop();
-                if (e.speed > speed)
+                if (e.speed*3.3 > speed)
                 {
-                    speed = e.speed;
+                    speed = e.speed*3.3;
 
                     int lvl = 0;
                     if (speed <= 2000)
+                    {
                         lvl = 1;
+                        labelRemark.Text = "Push Harder";
+                        goodDepths = 0;
+                    }
                     else
-                        lvl = 2;
+                    {
+                        switch (goodDepths)
+                        {
+                            case 2 :
+								lvl = 3;
+								labelRemark.Text = "Good Depth";
+                                break;
+                            default :
+								lvl = 2;
+								labelRemark.Text = "Push Faster";
+                                goodDepths++;
+                                break;
+                        }
+
+                    }
                      
 
                     progressBarSpeed.CurrentSpeedUpdate.Invoke(this, lvl);
@@ -142,6 +161,7 @@ namespace cprapp.View
 
         public async void QuitButton_Clicked(Object sender, EventArgs e)
         {
+            DependencyService.Get<IAudioService>().PlayMP3(5);
             if (await DisplayActionSheet("CPR Practice", "No", "Yes", "Are you sure you want to quit?") == "Yes")
             {
                 Processes_Disable();

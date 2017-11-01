@@ -119,6 +119,8 @@
     <AndroidResource Include="Resources\drawable\meter.png" />
     <AndroidResource Include="Resources\drawable\body.png" />
     <AndroidResource Include="Resources\drawable\human_body.png" />
+    <AndroidResource Include="Resources\raw\good.mp3" />
+    <AndroidResource Include="Resources\raw\end.mp3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
