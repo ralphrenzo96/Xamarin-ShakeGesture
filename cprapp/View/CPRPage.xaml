@@ -4,11 +4,11 @@
         <StackLayout Grid.Row = "0" VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" Spacing = "0">
             <Grid RowSpacing = "0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="7*" />
-                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="8*" />
+                    <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
-                <StackLayout Grid.Row = "0" Padding = "20,5,0,0">
-                    <Image Source = "human_body" Aspect = "AspectFit" VerticalOptions = "CenterAndExpand" HorizontalOptions = "CenterAndExpand"/>
+                <StackLayout Grid.Row = "0" Padding = "20,5,0,5">
+                    <Image Source = "body_gray" Aspect = "AspectFit" VerticalOptions = "CenterAndExpand" HorizontalOptions = "CenterAndExpand"/>
                 </StackLayout>
 
                 <StackLayout Grid.Row = "0" VerticalOptions = "CenterAndExpand">
@@ -23,31 +23,35 @@
                 </Frame>
             </Grid>
         </StackLayout>
-        
-        <StackLayout Grid.Row = "0" VerticalOptions = "StartAndExpand" Spacing = "0" HorizontalOptions = "End" BackgroundColor = "#34495e">
-            <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5">
-                <Label Text = "Elapsed Time" TextColor = "White" FontSize = "12" HorizontalTextAlignment = "Center" />
-                <Label Text = "00:00" x:Name = "labelWatch" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
-            </StackLayout>
 
-            <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5">
-                <Label Text = "Idle Time" TextColor = "White" FontSize = "12" HorizontalTextAlignment = "Center" />
-                <Label Text = "00:00" x:Name = "labelIdle" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
-            </StackLayout>
+        <StackLayout Orientation = "Horizontal" Spacing = "0">
+            <Label HorizontalOptions = "FillAndExpand" VerticalOptions = "Start" x:Name = "labelRemark" TextColor = "Gray" FontSize = "18" Margin = "20"/>
+            
+            <StackLayout Grid.Row = "0" VerticalOptions = "StartAndExpand" Spacing = "0" HorizontalOptions = "End" BackgroundColor = "#34495e">
+                <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5">
+                    <Label Text = "Elapsed Time" TextColor = "White" FontSize = "12" HorizontalTextAlignment = "Center" />
+                    <Label Text = "00:00" x:Name = "labelWatch" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
+                </StackLayout>
 
-            <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5">
-                <Label Text = "Depth" TextColor = "White" FontSize = "12" HorizontalTextAlignment = "Center" />
-                <Label Text = "0" x:Name = "labelDisplay" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
-            </StackLayout>
+                <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5">
+                    <Label Text = "Idle Time" TextColor = "White" FontSize = "12" HorizontalTextAlignment = "Center" />
+                    <Label Text = "00:00" x:Name = "labelIdle" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
+                </StackLayout>
 
-             <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5">
-                <Label Text = "Rate" TextColor = "White" FontSize = "12" HorizontalTextAlignment = "Center" />
-                <Label Text = "0" x:Name = "labelRate" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
-            </StackLayout>
+                <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5">
+                    <Label Text = "Depth" TextColor = "White" FontSize = "12" HorizontalTextAlignment = "Center" />
+                    <Label Text = "0" x:Name = "labelDisplay" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
+                </StackLayout>
 
-            <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5">
-                <Button Text = "Done" Clicked = "QuitButton_Clicked" VerticalOptions = "EndAndExpand" BackgroundColor = "Red" TextColor = "White"/>
-            </StackLayout>             
+                 <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5">
+                    <Label Text = "Rate" TextColor = "White" FontSize = "12" HorizontalTextAlignment = "Center" />
+                    <Label Text = "0" x:Name = "labelRate" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
+                </StackLayout>
+
+                <StackLayout VerticalOptions = "Start" Spacing = "0" Padding = "5">
+                    <Button Text = "Done" Clicked = "QuitButton_Clicked" VerticalOptions = "EndAndExpand" BackgroundColor = "Red" TextColor = "White"/>
+                </StackLayout>             
+            </StackLayout>
         </StackLayout>
     </Grid>
 </ContentPage>

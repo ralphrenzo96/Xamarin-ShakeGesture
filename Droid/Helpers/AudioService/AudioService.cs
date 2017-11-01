@@ -24,6 +24,12 @@ namespace cprapp.Droid.Helpers.AudioService
 				case 3:
                     _mediaPlayer = MediaPlayer.Create(Android.App.Application.Context, Resource.Raw.faster);
 					break;
+				case 4:
+                    _mediaPlayer = MediaPlayer.Create(Android.App.Application.Context, Resource.Raw.good);
+					break;
+				case 5:
+					_mediaPlayer = MediaPlayer.Create(Android.App.Application.Context, Resource.Raw.end);
+					break;
 			}
 
 

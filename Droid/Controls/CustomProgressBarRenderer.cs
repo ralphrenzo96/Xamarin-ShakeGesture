@@ -42,12 +42,14 @@ namespace cprapp.Droid.Controls
 
         private void ChangeTint(object sender, int e)
         {
+
             switch(e)
             {
                 case 1 :
                     Control.ProgressDrawable.SetColorFilter(Color.Red.ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcIn);
                     break;
                 case 2 :
+                case 3 :
                     Control.ProgressDrawable.SetColorFilter(Color.YellowGreen.ToAndroid(), Android.Graphics.PorterDuff.Mode.SrcIn);
                     break;
             }

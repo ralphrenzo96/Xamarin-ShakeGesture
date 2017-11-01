@@ -34,6 +34,11 @@ namespace cprapp.Utilities
             WaitTime = waitTime;
         }
 
+        public void Reset()
+        {
+            WaitTime = WaitTime;
+        }
+
         public async Task Start()
         {
             int seconds = 0;
