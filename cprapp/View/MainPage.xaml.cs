@@ -19,6 +19,7 @@ namespace cprapp.View
             switch(Convert.ToInt32(button.CommandParameter.ToString()))
             {
                 case 1: await Navigation.PushAsync(new CPRPage()); break;
+                case 2: await Navigation.PushAsync(new CPRPage()); break;
             }
         }
     }
