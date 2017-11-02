@@ -33,6 +33,8 @@ namespace cprapp.Droid.Controls
         {
             if(e)
                 DefaultTint();
+
+
         }
 
         private void DefaultTint()
@@ -42,7 +44,6 @@ namespace cprapp.Droid.Controls
 
         private void ChangeTint(object sender, int e)
         {
-
             switch(e)
             {
                 case 1 :
