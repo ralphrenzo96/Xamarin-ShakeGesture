@@ -16,7 +16,7 @@ namespace cprapp.View
         StopWatch stopWatch = new StopWatch();
         StopWatch idleWatch = new StopWatch();
         TickingWatch tickingWatch = new TickingWatch();
-        CustomTimer timer = new CustomTimer(3);
+        CustomTimer timer = new CustomTimer(1);
         CustomTimer idleTimer = new CustomTimer(5);
 
 
@@ -76,9 +76,16 @@ namespace cprapp.View
             }
         }
 
-        private void delayIdleTimer(object sender, EventArgs e)
+        private async void delayIdleTimer(object sender, EventArgs e)
         {
             idleTimer.Stop();
+
+			await progressBarSpeed.ProgressTo(0, 500, Easing.Linear);
+			speed = 0;
+
+			System.Diagnostics.Debug.WriteLine("FUCK");
+			progressBarSpeed.SpeedResetUpdate.Invoke(this, true);
+
             idleWatch.Start();
 			OnActive(false);
         }
@@ -88,15 +95,10 @@ namespace cprapp.View
             DependencyService.Get<ITickingService>().PlayMP3(isActive);
 		}
 
-        private async void IdleTimer(object sender, int e)
+        private void IdleTimer(object sender, int e)
         {
             TimeSpan result = TimeSpan.FromSeconds(e);
             labelIdle.Text = result.ToString("mm':'ss");
-                       
-			await progressBarSpeed.ProgressTo(0, 500, Easing.Linear);
-            speed = 0;
-			progressBarSpeed.SpeedResetUpdate.Invoke(this, true);
-
 		}
 
         private void UpdateTimer(object sender, int e)
@@ -112,6 +114,7 @@ namespace cprapp.View
             timer.Stop();
 
             speed = 0;
+
             await idleTimer.Start();
         }
 
@@ -125,9 +128,13 @@ namespace cprapp.View
         async void OnSpeedChanged(object sender, IShakeServiceEventArgs e)
         {
             OnActive(true);
+            idleWatch.Reset();
+            idleWatch.Stop();
+            idleTimer.Stop();
 
             if (isNotBusy)
             {
+                
                 isNotBusy = false;
                 timer.Stop();
                 if (e.speed*3.3 > speed)
@@ -161,7 +168,7 @@ namespace cprapp.View
                     await progressBarSpeed.ProgressTo((speed / 3000), 500, Easing.Linear);
 					DependencyService.Get<IAudioService>().PlayMP3(++lvl);
                 }
-                idleWatch.Reset();
+
                 labelIdle.Text = "00:00";
                 await timer.Start();
                 isNotBusy = true;
