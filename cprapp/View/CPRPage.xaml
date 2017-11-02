@@ -24,10 +24,27 @@
             </Grid>
         </StackLayout>
 
-        <StackLayout Orientation = "Horizontal" Spacing = "8">
-            <StackLayout VerticalOptions = "Start" HorizontalOptions = "StartAndExpand" Spacing = "0" Padding = "10">
-                <Button Text = "Done" Clicked = "QuitButton_Clicked" BackgroundColor = "Red" TextColor = "White"/>
-            </StackLayout> 
+        <StackLayout Grid.Row = "0" Orientation = "Horizontal" Spacing = "8">
+            <StackLayout VerticalOptions = "Start" HorizontalOptions = "Start" Spacing = "0" Padding = "10">
+                <Button Text = "Quit" Clicked = "QuitButton_Clicked" BackgroundColor = "Red" TextColor = "White"/>
+            </StackLayout>
+
+            <StackLayout HorizontalOptions = "CenterAndExpand" VerticalOptions = "Start" Orientation = "Horizontal" Spacing = "20" Padding = "0">
+                <StackLayout Spacing = "3">
+                    <Label Text = "Bad" HorizontalTextAlignment = "Center" TextColor = "Red" FontSize = "16"/>
+                    <Label Text = "0" HorizontalTextAlignment = "Center" TextColor = "Red" x:Name = "labelScoreBad" FontSize = "18" FontAttributes = "Bold"/>
+                </StackLayout>
+
+                <StackLayout Spacing = "3" BackgroundColor = "Gray" Padding = "5" x:Name = "stackTimeLeft">
+                    <Label Text = "Time Left" HorizontalTextAlignment = "Center" TextColor = "White" FontSize = "16"/>
+                    <Label Text = "30" HorizontalTextAlignment = "Center" TextColor = "White" x:Name = "labelTimeLeft" FontSize = "18" FontAttributes = "Bold"/>
+                </StackLayout>
+
+                <StackLayout Spacing = "3">
+                    <Label Text = "Good" HorizontalTextAlignment = "Center" TextColor = "Green" FontSize = "16"/>
+                    <Label Text = "0" HorizontalTextAlignment = "Center" TextColor = "Green" x:Name = "labelScoreGood" FontSize = "18" FontAttributes = "Bold"/>
+                </StackLayout>
+            </StackLayout>
         
             <StackLayout Grid.Row = "0" VerticalOptions = "StartAndExpand" Spacing = "5" Padding = "8" HorizontalOptions = "End" BackgroundColor = "#34495e">
                 <StackLayout VerticalOptions = "Start" Spacing = "0">
@@ -55,6 +72,10 @@
                     <Label Text = "- - -" x:Name = "labelRemark" FontSize = "14" TextColor = "White" HorizontalTextAlignment = "Center" FontAttributes = "Bold"/>
                 </StackLayout>  
             </StackLayout>
+        </StackLayout>
+
+        <StackLayout VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" BackgroundColor = "#CC000000" x:Name = "stackPreparation">
+            <Label Text = "5" FontSize = "100" TextColor = "White" VerticalTextAlignment = "Center" HorizontalOptions = "CenterAndExpand" VerticalOptions = "FillAndExpand" x:Name = "labelPrepartion"/>
         </StackLayout>
     </Grid>
 </ContentPage>

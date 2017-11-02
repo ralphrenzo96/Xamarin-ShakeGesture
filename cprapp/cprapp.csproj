@@ -35,6 +35,9 @@
     <EmbeddedResource Include="View\CPRPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\ChallengeResultPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -57,6 +60,9 @@
     <Compile Include="Controls\CustomNavImage.cs" />
     <Compile Include="Helpers\AudioService\IAudioService.cs" />
     <Compile Include="Helpers\StatusBarService\IStatusBarService.cs" />
+    <Compile Include="View\ChallengeResultPage.xaml.cs">
+      <DependentUpon>ChallengeResultPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

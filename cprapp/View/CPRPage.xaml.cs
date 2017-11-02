@@ -16,53 +16,67 @@ namespace cprapp.View
         IShakeService shake = DependencyService.Get<IShakeService>();
         StopWatch stopWatch = new StopWatch();
         StopWatch idleWatch = new StopWatch();
+		StopWatch prepareTimer = new StopWatch();
         TickingWatch tickingWatch = new TickingWatch();
         CustomTimer timer = new CustomTimer(1);
         CustomTimer idleTimer = new CustomTimer(5);
 
-
         double speed = 0;
-        bool isNotBusy = true, isActive = true;
-        int goodDepths = 0;
+        bool isNotBusy = true, isActive = true, isPractice;
+        int goodDepths = 0, scoreBad = 0, scoreGood = 0;
+        int prepareTime = 5;
+        int endTime = 30;
 
-        public CPRPage()
+        public CPRPage(bool choosen)
         {
             InitializeComponent();
+            isPractice = choosen;
 
-            // Methods
-            timer.Elapsed += CPRIdle;
-            idleTimer.Elapsed += delayIdleTimer;
-            stopWatch.Elapsed += UpdateTimer;
-            tickingWatch.Elapsed += PlayTick;
-            idleWatch.Elapsed += IdleTimer;
+			if (isPractice)
+			{
+				stackTimeLeft.IsVisible = false;
+			}
 
-			// Audio and Status Bar
-			
-            DependencyService.Get<IAudioService>().PlayMP3(1);
+            prepareTimer.Elapsed += prepareUser;
+            prepareTimer.Start();
+            DependencyService.Get<IAudioService>().PlayMP3(6);
 
-            // Watch
-            stopWatch.Start();
-            tickingWatch.Start();
 
-            // Animations
-            AnimateProgressBar();
-            AnimateHands();
         }
 
-        //private void Reset()
-        //{
-        //    //idleWatch.Reset();
-        //    //DependencyService.Get<ITickingService>().PlayMP3(true);
-        //    labelRemark.Text = string.Empty;
-        //    labelDisplay.Text = "0";
-        //    labelRate.Text = "0";
-        //    labelIdle.Text = "00:00";
-        //    //isActive = true;
-        //    //AnimateHands();
-        //    speed = 0;
-        //    //idleWatch.Start();
-        //    tickingWatch.Start();
-        //}
+
+        private void prepareUser(object sender, int e)
+        {
+            labelPrepartion.Text = (prepareTime - e).ToString();
+            if(e == 5)
+            {
+				prepareTimer.Stop();
+                stackPreparation.IsVisible = false;
+				Setup();
+            }
+        }
+
+        private void Setup()
+        {
+			// Methods
+			timer.Elapsed += CPRIdle;
+			idleTimer.Elapsed += delayIdleTimer;
+			stopWatch.Elapsed += UpdateTimer;
+			tickingWatch.Elapsed += PlayTick;
+			idleWatch.Elapsed += IdleTimer;
+
+			// Audio and Status Bar
+
+			DependencyService.Get<IAudioService>().PlayMP3(1);
+
+			// Watch
+			stopWatch.Start();
+			tickingWatch.Start();
+
+			// Animations
+			AnimateProgressBar();
+			AnimateHands();
+        }
 
         private void OnActive(bool isUserActive)
         {
@@ -85,8 +99,9 @@ namespace cprapp.View
 
             idleWatch.Start();
 			OnActive(false);
+
 			await progressBarSpeed.ProgressTo(0, 500, Easing.Linear);
-			progressBarSpeed.SpeedResetUpdate.Invoke(this, true);
+			
 		}
 
 		private void PlayTick(object sender, int e)
@@ -96,14 +111,27 @@ namespace cprapp.View
 
         private void IdleTimer(object sender, int e)
         {
+            progressBarSpeed.SpeedResetUpdate.Invoke(this, true);
             TimeSpan result = TimeSpan.FromSeconds(e);
             labelIdle.Text = result.ToString("mm':'ss");
 		}
 
         private void UpdateTimer(object sender, int e)
         {
+            if (!isPractice)
+            {
+                endTime--;
+                labelTimeLeft.Text = endTime.ToString();
+            }
+
             TimeSpan result = TimeSpan.FromSeconds(e);
             labelWatch.Text = result.ToString("mm':'ss");
+
+            if (endTime == 0 & !isPractice)
+            {
+                Processes_Disable();
+                Navigation.PushAsync(new ChallengeResultPage((scoreGood >= scoreBad) ? true : false), false);
+            }
         }
 
         async void CPRIdle(object sender, EventArgs e)
@@ -140,12 +168,14 @@ namespace cprapp.View
                     int lvl = 0;
                     if (speed <= 2000)
                     {
+                        scoreBad++;
                         lvl = 1;
                         labelRemark.Text = "Push Harder";
                         goodDepths = 0;
                     }
                     else
                     {
+                        scoreGood++;
                         switch (goodDepths)
                         {
                             case 2:
@@ -159,6 +189,10 @@ namespace cprapp.View
                                 break;
                         }
                     }
+
+                    labelScoreBad.Text = scoreBad.ToString();
+                    labelScoreGood.Text = scoreGood.ToString();
+
                     progressBarSpeed.CurrentSpeedUpdate.Invoke(this, lvl);
                     labelDisplay.Text = (Math.Round((speed / 1000), 2)).ToString();
                     await progressBarSpeed.ProgressTo((speed / 3000), 500, Easing.Linear);
@@ -203,6 +237,10 @@ namespace cprapp.View
 #if DEBUG
 			Debug.WriteLine("[CPRPage.cs] Processes Disabled");
 #endif
+
+            OnActive(false);
+            prepareTimer.Stop();
+            prepareTimer.Elapsed -= prepareUser;
             timer.Stop();
 			timer.Elapsed -= CPRIdle;
             idleTimer.Stop();

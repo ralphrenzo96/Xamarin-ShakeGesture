@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage NavigationPage.HasNavigationBar = "false" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="cprapp.View.MainPage">
-	<StackLayout VerticalOptions = "CenterAndExpand">
-        <Button Text = "Start CPR" Clicked = "OnClicked_Navigate" CommandParameter = "1" VerticalOptions = "Center"/>
-    </StackLayout>
+<ContentPage BackgroundColor = "White" NavigationPage.HasNavigationBar = "false" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="cprapp.View.MainPage">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Style x:Key = "stackOption" TargetType = "StackLayout">
+                <Setter Property = "Padding" Value = "10,40,10,10"/>
+<!--                <Setter Property = "HorizontalOptions" Value = "FillAndExpand"/>-->
+                <Setter Property = "VerticalOptions" Value = "FillAndExpand"/>
+            </Style>
+
+            <Style x:Key = "labelOptionHeader" TargetType = "Label">
+                <Setter Property = "FontFamily" Value = "Avenir"/>
+                <Setter Property = "FontSize" Value = "22"/>
+                <Setter Property = "TextColor" Value = "White"/>
+                <Setter Property = "HorizontalTextAlignment" Value = "Center"/>
+            </Style>
+            
+            <Style x:Key = "LabelStyle" TargetType = "Label">
+                <Setter Property = "FontFamily" Value = "Avenir"/>
+                <Setter Property = "FontSize" Value = "13"/>
+            </Style>
+
+            <Style x:Key = "ButtonType" TargetType = "Button">
+                <Setter Property = "BackgroundColor" Value = "#2D8DD6"/>
+                <Setter Property = "TextColor" Value = "White"/>
+                <Setter Property = "BorderRadius" Value = "0"/>
+                <Setter Property = "FontSize" Value = "12"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Grid VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" ColumnSpacing = "5" Padding = "5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackLayout Grid.Column = "0" Style = "{StaticResource stackOption}" BackgroundColor = "#e67e22">
+            <Label Text = "Take the Challenge!" Style = "{StaticResource labelOptionHeader}"/>
+            <Label Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ultrices purus, quis tempus nunc." VerticalOptions = "FillAndExpand"/>
+            <Button Text = "Challenge" VerticalOptions = "CenterAndExpand" HorizontalOptions = "FillAndExpand" Clicked = "OnClicked_Navigate" CommandParameter = "1"/>
+        </StackLayout>
+
+        <StackLayout Grid.Column = "1" Style = "{StaticResource stackOption}" BackgroundColor = "#2c3e50">
+            <Label Text = "Train yourself!" Style = "{StaticResource labelOptionHeader}"/>
+            <Label Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ultrices purus, quis tempus nunc." VerticalOptions = "FillAndExpand"/>
+            <Button Text = "Practice" VerticalOptions = "CenterAndExpand" HorizontalOptions = "FillAndExpand" Clicked = "OnClicked_Navigate" CommandParameter = "2"/>
+        </StackLayout>
+        
+    </Grid>
 </ContentPage>
