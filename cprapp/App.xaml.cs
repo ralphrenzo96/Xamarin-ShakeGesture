@@ -1,4 +1,5 @@
-﻿using cprapp.View;
+﻿using cprapp.Helpers.StatusBarService;
+using cprapp.View;
 using Xamarin.Forms;
 
 namespace cprapp
@@ -8,7 +9,7 @@ namespace cprapp
         public App()
         {
             InitializeComponent();
-
+            DependencyService.Get<IStatusBarService>().HideStatusBar();
             MainPage = new NavigationPage(new MainPage());
         }
 

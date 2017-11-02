@@ -96,6 +96,7 @@
     <Compile Include="Controls\CustomProgressBarRenderer.cs" />
     <Compile Include="Helpers\TickingService\TickingService.cs" />
     <Compile Include="Helpers\AudioService\AudioService.cs" />
+    <Compile Include="Helpers\StatusBarService\StatusBarService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -128,6 +129,7 @@
     <Folder Include="Helpers\TickingService\" />
     <Folder Include="Resources\raw\" />
     <Folder Include="Helpers\AudioService\" />
+    <Folder Include="Helpers\StatusBarService\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Vector.Drawable.23.3.0\build\Xamarin.Android.Support.Vector.Drawable.targets')" />

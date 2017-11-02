@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using cprapp.Helpers.AudioService;
 using cprapp.Helpers.ShakeService;
+using cprapp.Helpers.StatusBarService;
 using cprapp.Helpers.TickingService;
 using cprapp.Utilities;
 using Xamarin.Forms;
@@ -35,7 +36,8 @@ namespace cprapp.View
             tickingWatch.Elapsed += PlayTick;
             idleWatch.Elapsed += IdleTimer;
 
-            // Audio
+			// Audio and Status Bar
+			
             DependencyService.Get<IAudioService>().PlayMP3(1);
 
             // Watch
@@ -193,6 +195,7 @@ namespace cprapp.View
             DependencyService.Get<IAudioService>().PlayMP3(5);
             if (await DisplayActionSheet("CPR Practice", "No", "Yes", "Are you sure you want to quit?") == "Yes")
             {
+                //DependencyService.Get<IStatusBarService>().ShowStatusBar();
                 Processes_Disable();
                 await Navigation.PopAsync();
             }
