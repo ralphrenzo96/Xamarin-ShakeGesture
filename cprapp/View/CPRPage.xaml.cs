@@ -22,18 +22,26 @@ namespace cprapp.View
         CustomTimer idleTimer = new CustomTimer(5);
 
         double speed = 0;
-        bool isNotBusy = true, isActive = true;
+        bool isNotBusy = true, isActive = true, isPractice;
         int goodDepths = 0, scoreBad = 0, scoreGood = 0;
         int prepareTime = 5;
         int endTime = 30;
 
-        public CPRPage()
+        public CPRPage(bool choosen)
         {
             InitializeComponent();
+            isPractice = choosen;
+
+			if (isPractice)
+			{
+				stackTimeLeft.IsVisible = false;
+			}
 
             prepareTimer.Elapsed += prepareUser;
             prepareTimer.Start();
             DependencyService.Get<IAudioService>().PlayMP3(6);
+
+
         }
 
 
@@ -110,12 +118,16 @@ namespace cprapp.View
 
         private void UpdateTimer(object sender, int e)
         {
-            endTime--;
-            labelTimeLeft.Text = endTime.ToString();
+            if (!isPractice)
+            {
+                endTime--;
+                labelTimeLeft.Text = endTime.ToString();
+            }
+
             TimeSpan result = TimeSpan.FromSeconds(e);
             labelWatch.Text = result.ToString("mm':'ss");
 
-            if (endTime == 0)
+            if (endTime == 0 & !isPractice)
             {
                 Processes_Disable();
                 Navigation.PushAsync(new ChallengeResultPage((scoreGood >= scoreBad) ? true : false), false);
