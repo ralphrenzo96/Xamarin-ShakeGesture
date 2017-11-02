@@ -23,6 +23,7 @@ namespace cprapp.View
 
         double speed = 0;
         bool isNotBusy = true, isActive = true, isPractice;
+        bool isReady;
         int goodDepths = 0, scoreBad = 0, scoreGood = 0;
         int prepareTime = 5;
         int endTime = 30;
@@ -33,19 +34,15 @@ namespace cprapp.View
             isPractice = choosen;
 
 			if (isPractice)
-			{
 				stackTimeLeft.IsVisible = false;
-			}
-
-            prepareTimer.Elapsed += prepareUser;
+            
+            prepareTimer.Elapsed += PrepareUser;
             prepareTimer.Start();
             DependencyService.Get<IAudioService>().PlayMP3(6);
-
-
         }
 
 
-        private void prepareUser(object sender, int e)
+        private void PrepareUser(object sender, int e)
         {
             labelPrepartion.Text = (prepareTime - e).ToString();
             if(e == 5)
@@ -53,27 +50,23 @@ namespace cprapp.View
 				prepareTimer.Stop();
                 stackPreparation.IsVisible = false;
 				Setup();
+                isReady = true;
             }
         }
 
         private void Setup()
         {
-			// Methods
 			timer.Elapsed += CPRIdle;
-			idleTimer.Elapsed += delayIdleTimer;
+			idleTimer.Elapsed += DelayIdleTimer;
 			stopWatch.Elapsed += UpdateTimer;
 			tickingWatch.Elapsed += PlayTick;
 			idleWatch.Elapsed += IdleTimer;
 
-			// Audio and Status Bar
-
 			DependencyService.Get<IAudioService>().PlayMP3(1);
 
-			// Watch
 			stopWatch.Start();
 			tickingWatch.Start();
 
-			// Animations
 			AnimateProgressBar();
 			AnimateHands();
         }
@@ -81,18 +74,9 @@ namespace cprapp.View
         private void OnActive(bool isUserActive)
         {
             isActive = isUserActive;
-           
-            if(isUserActive)
-            {
-                
-            }
-            else
-            {
-                
-            }
         }
 
-        private async void delayIdleTimer(object sender, EventArgs e)
+        private async void DelayIdleTimer(object sender, EventArgs e)
         {
             idleTimer.Stop();
             speed = 0;
@@ -118,28 +102,31 @@ namespace cprapp.View
 
         private void UpdateTimer(object sender, int e)
         {
+            TimeSpan result = TimeSpan.FromSeconds(e);
+            labelWatch.Text = result.ToString("mm':'ss");
+
             if (!isPractice)
             {
                 endTime--;
                 labelTimeLeft.Text = endTime.ToString();
             }
 
-            TimeSpan result = TimeSpan.FromSeconds(e);
-            labelWatch.Text = result.ToString("mm':'ss");
-
             if (endTime == 0 & !isPractice)
             {
                 Processes_Disable();
                 Navigation.PushAsync(new ChallengeResultPage((scoreGood >= scoreBad) ? true : false), false);
             }
+
+            if (endTime == 21 & !isPractice)
+                DependencyService.Get<IAudioService>().PlayMP3(9);
+            if (endTime == 10 & !isPractice)
+                DependencyService.Get<IAudioService>().PlayMP3(10);
         }
 
         async void CPRIdle(object sender, EventArgs e)
         {
             timer.Stop();
-
             speed = 0;
-
             await idleTimer.Start();
         }
 
@@ -152,56 +139,59 @@ namespace cprapp.View
 
         async void OnSpeedChanged(object sender, IShakeServiceEventArgs e)
         {
-            OnActive(true);
-            idleWatch.Reset();
-            idleWatch.Stop();
-
-            if (isNotBusy)
+            if(isReady)
             {
-                isNotBusy = false;
-                idleTimer.Stop();
-                timer.Stop();
-                if (e.speed*3.3 > speed)
+                OnActive(true);
+                idleWatch.Reset();
+                idleWatch.Stop();
+
+                if (isNotBusy)
                 {
-                    speed = e.speed*3.3;
+                    isNotBusy = false;
+                    idleTimer.Stop();
+                    timer.Stop();
+                    if (e.speed*3.3 > speed)
+                    {
+                        speed = e.speed*3.3;
 
-                    int lvl = 0;
-                    if (speed <= 2000)
-                    {
-                        scoreBad++;
-                        lvl = 1;
-                        labelRemark.Text = "Push Harder";
-                        goodDepths = 0;
-                    }
-                    else
-                    {
-                        scoreGood++;
-                        switch (goodDepths)
+                        int lvl = 0;
+                        if (speed <= 2000)
                         {
-                            case 2:
-                                lvl = 3;
-                                labelRemark.Text = "Good Depth";
-                                break;
-                            default:
-                                lvl = 2;
-                                labelRemark.Text = "Push Faster";
-                                goodDepths++;
-                                break;
+                            scoreBad++;
+                            lvl = 1;
+                            labelRemark.Text = "Push Harder";
+                            goodDepths = 0;
                         }
+                        else
+                        {
+                            scoreGood++;
+                            switch (goodDepths)
+                            {
+                                case 2:
+                                    lvl = 3;
+                                    labelRemark.Text = "Good Depth";
+                                    break;
+                                default:
+                                    lvl = 2;
+                                    labelRemark.Text = "Push Faster";
+                                    goodDepths++;
+                                    break;
+                            }
+                        }
+
+                        labelScoreBad.Text = scoreBad.ToString();
+                        labelScoreGood.Text = scoreGood.ToString();
+
+                        progressBarSpeed.CurrentSpeedUpdate.Invoke(this, lvl);
+                        labelDisplay.Text = (Math.Round((speed / 1000), 2)).ToString();
+                        await progressBarSpeed.ProgressTo((speed / 3000), 500, Easing.Linear);
+    					DependencyService.Get<IAudioService>().PlayMP3(++lvl);
                     }
 
-                    labelScoreBad.Text = scoreBad.ToString();
-                    labelScoreGood.Text = scoreGood.ToString();
-
-                    progressBarSpeed.CurrentSpeedUpdate.Invoke(this, lvl);
-                    labelDisplay.Text = (Math.Round((speed / 1000), 2)).ToString();
-                    await progressBarSpeed.ProgressTo((speed / 3000), 500, Easing.Linear);
-					DependencyService.Get<IAudioService>().PlayMP3(++lvl);
+                    labelIdle.Text = "00:00";
+                    await timer.Start();
+                    isNotBusy = true;
                 }
-
-                labelIdle.Text = "00:00";
-                await timer.Start();
-                isNotBusy = true;
             }
         }
 
@@ -240,11 +230,11 @@ namespace cprapp.View
 
             OnActive(false);
             prepareTimer.Stop();
-            prepareTimer.Elapsed -= prepareUser;
+            prepareTimer.Elapsed -= PrepareUser;
             timer.Stop();
 			timer.Elapsed -= CPRIdle;
             idleTimer.Stop();
-			idleTimer.Elapsed -= delayIdleTimer;
+			idleTimer.Elapsed -= DelayIdleTimer;
             stopWatch.Stop();
 			stopWatch.Elapsed -= UpdateTimer;
             tickingWatch.Stop();

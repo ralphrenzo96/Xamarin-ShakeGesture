@@ -120,12 +120,14 @@
     <AndroidResource Include="Resources\drawable\meter.png" />
     <AndroidResource Include="Resources\raw\end.mp3" />
     <AndroidResource Include="Resources\drawable\body_gray.png" />
-    <AndroidResource Include="Resources\raw\count.mp3" />
     <AndroidResource Include="Resources\drawable\dead.jpg" />
     <AndroidResource Include="Resources\drawable\alive.jpg" />
     <AndroidResource Include="Resources\raw\alive.mp3" />
     <AndroidResource Include="Resources\raw\dead.mp3" />
     <AndroidResource Include="Resources\raw\good.mp3" />
+    <AndroidResource Include="Resources\raw\twenty_seconds.mp3" />
+    <AndroidResource Include="Resources\raw\countdown.mp3" />
+    <AndroidResource Include="Resources\raw\count.mp3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
