@@ -81,16 +81,13 @@ namespace cprapp.View
         private async void delayIdleTimer(object sender, EventArgs e)
         {
             idleTimer.Stop();
-
-			await progressBarSpeed.ProgressTo(0, 500, Easing.Linear);
-			speed = 0;
-
-			System.Diagnostics.Debug.WriteLine("FUCK");
-			progressBarSpeed.SpeedResetUpdate.Invoke(this, true);
+            speed = 0;
 
             idleWatch.Start();
 			OnActive(false);
-        }
+			await progressBarSpeed.ProgressTo(0, 500, Easing.Linear);
+			progressBarSpeed.SpeedResetUpdate.Invoke(this, true);
+		}
 
 		private void PlayTick(object sender, int e)
 		{
@@ -107,8 +104,6 @@ namespace cprapp.View
         {
             TimeSpan result = TimeSpan.FromSeconds(e);
             labelWatch.Text = result.ToString("mm':'ss");
-
-			
         }
 
         async void CPRIdle(object sender, EventArgs e)
@@ -132,12 +127,11 @@ namespace cprapp.View
             OnActive(true);
             idleWatch.Reset();
             idleWatch.Stop();
-            idleTimer.Stop();
 
             if (isNotBusy)
             {
-                
                 isNotBusy = false;
+                idleTimer.Stop();
                 timer.Stop();
                 if (e.speed*3.3 > speed)
                 {
@@ -192,6 +186,7 @@ namespace cprapp.View
 
         public async void QuitButton_Clicked(Object sender, EventArgs e)
         {
+            OnActive(false);
             DependencyService.Get<IAudioService>().PlayMP3(5);
             if (await DisplayActionSheet("CPR Practice", "No", "Yes", "Are you sure you want to quit?") == "Yes")
             {
@@ -199,6 +194,8 @@ namespace cprapp.View
                 Processes_Disable();
                 await Navigation.PopAsync();
             }
+            else
+                OnActive(true);
         }
 
         private void Processes_Disable()
