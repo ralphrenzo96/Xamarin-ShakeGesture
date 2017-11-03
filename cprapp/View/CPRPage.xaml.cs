@@ -35,8 +35,13 @@ namespace cprapp.View
 
 			if (isPractice)
 				stackTimeLeft.IsVisible = false;
-            
-            prepareTimer.Elapsed += PrepareUser;
+        }
+
+        private void ButtonStart_Clicked(object sender, EventArgs e)
+        {
+            ((Button)sender).Opacity = 0;
+            ((Button)sender).IsEnabled = false;
+			prepareTimer.Elapsed += PrepareUser;
             prepareTimer.Start();
             DependencyService.Get<IAudioService>().PlayMP3(6);
         }
@@ -227,8 +232,8 @@ namespace cprapp.View
 #if DEBUG
 			Debug.WriteLine("[CPRPage.cs] Processes Disabled");
 #endif
-
             OnActive(false);
+            DependencyService.Get<IAudioService>().StopMedia();
             prepareTimer.Stop();
             prepareTimer.Elapsed -= PrepareUser;
             timer.Stop();
