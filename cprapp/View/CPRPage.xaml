@@ -75,7 +75,8 @@
         </StackLayout>
 
         <StackLayout VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" BackgroundColor = "#CC000000" x:Name = "stackPreparation">
-            <Label Text = "5" FontSize = "100" TextColor = "White" VerticalTextAlignment = "Center" HorizontalOptions = "CenterAndExpand" VerticalOptions = "FillAndExpand" x:Name = "labelPrepartion"/>
+            <Label Text = "5" FontSize = "150" TextColor = "White" VerticalTextAlignment = "Center" HorizontalOptions = "CenterAndExpand" VerticalOptions = "FillAndExpand" x:Name = "labelPrepartion"/>
+            <Button Text = "Start" TextColor = "White" BackgroundColor = "Red" Clicked = "ButtonStart_Clicked" HorizontalOptions = "Center"/>
         </StackLayout>
     </Grid>
 </ContentPage>

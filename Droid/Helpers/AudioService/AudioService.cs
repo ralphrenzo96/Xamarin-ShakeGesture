@@ -52,5 +52,10 @@ namespace cprapp.Droid.Helpers.AudioService
             if (file != 0)
                 _mediaPlayer.Start();
 		}
+
+        public void StopMedia()
+        {
+            _mediaPlayer.Stop();
+        }
     }
 }
