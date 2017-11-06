@@ -35,7 +35,7 @@
                     <Label Text = "0" HorizontalTextAlignment = "Center" TextColor = "Red" x:Name = "labelScoreBad" FontSize = "18" FontAttributes = "Bold"/>
                 </StackLayout>
 
-                <StackLayout Spacing = "3" BackgroundColor = "Gray" Padding = "5" x:Name = "stackTimeLeft">
+                <StackLayout Spacing = "3" BackgroundColor = "Gray" Padding = "10,5" x:Name = "stackTimeLeft">
                     <Label Text = "Time Left" HorizontalTextAlignment = "Center" TextColor = "White" FontSize = "16"/>
                     <Label Text = "30" HorizontalTextAlignment = "Center" TextColor = "White" x:Name = "labelTimeLeft" FontSize = "18" FontAttributes = "Bold"/>
                 </StackLayout>

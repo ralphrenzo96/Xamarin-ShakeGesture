@@ -119,7 +119,7 @@ namespace cprapp.View
             if (endTime == 0 & !isPractice)
             {
                 Processes_Disable();
-                Navigation.PushAsync(new ChallengeResultPage((scoreGood >= scoreBad) ? true : false), false);
+                Navigation.PushAsync(new ChallengeResultPage(((scoreGood >= scoreBad) && (scoreGood >= 5)) ? true : false), false);
             }
 
             if (endTime == 21 & !isPractice)

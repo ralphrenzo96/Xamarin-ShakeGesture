@@ -37,13 +37,13 @@
         
         <StackLayout Grid.Column = "0" Style = "{StaticResource stackOption}" BackgroundColor = "#e67e22">
             <Label Text = "Take the Challenge!" Style = "{StaticResource labelOptionHeader}"/>
-            <Label Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ultrices purus, quis tempus nunc." VerticalOptions = "FillAndExpand"/>
+            <Label Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ultrices purus, quis tempus nunc." VerticalOptions = "FillAndExpand" TextColor = "White"/>
             <Button Text = "Challenge" VerticalOptions = "CenterAndExpand" HorizontalOptions = "FillAndExpand" Clicked = "OnClicked_Navigate" CommandParameter = "1"/>
         </StackLayout>
 
         <StackLayout Grid.Column = "1" Style = "{StaticResource stackOption}" BackgroundColor = "#2c3e50">
             <Label Text = "Train yourself!" Style = "{StaticResource labelOptionHeader}"/>
-            <Label Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ultrices purus, quis tempus nunc." VerticalOptions = "FillAndExpand"/>
+            <Label Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ultrices purus, quis tempus nunc." VerticalOptions = "FillAndExpand" TextColor = "White"/>
             <Button Text = "Practice" VerticalOptions = "CenterAndExpand" HorizontalOptions = "FillAndExpand" Clicked = "OnClicked_Navigate" CommandParameter = "2"/>
         </StackLayout>
         
