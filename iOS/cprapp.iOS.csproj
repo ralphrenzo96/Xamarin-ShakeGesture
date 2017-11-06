@@ -108,6 +108,10 @@
     <Folder Include="Resources\" />
     <Folder Include="Helpers\" />
     <Folder Include="Helpers\StatusBarService\" />
+    <Folder Include="Helpers\ShakeGesture\" />
+    <Folder Include="Resources\raw\" />
+    <Folder Include="Helpers\TickingService\" />
+    <Folder Include="Helpers\AudioService\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -124,6 +128,21 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\meter.png" />
+    <BundleResource Include="Resources\raw\alive.mp3" />
+    <BundleResource Include="Resources\raw\count.mp3" />
+    <BundleResource Include="Resources\raw\countdown.mp3" />
+    <BundleResource Include="Resources\raw\dead.mp3" />
+    <BundleResource Include="Resources\raw\end.mp3" />
+    <BundleResource Include="Resources\raw\faster.mp3" />
+    <BundleResource Include="Resources\raw\good.mp3" />
+    <BundleResource Include="Resources\raw\harder.mp3" />
+    <BundleResource Include="Resources\raw\start.mp3" />
+    <BundleResource Include="Resources\raw\tick.mp3" />
+    <BundleResource Include="Resources\raw\twenty_seconds.mp3" />
+    <BundleResource Include="Resources\alive.jpg" />
+    <BundleResource Include="Resources\body_gray.png" />
+    <BundleResource Include="Resources\dead.jpg" />
+    <BundleResource Include="Resources\hands.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
