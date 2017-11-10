@@ -12,7 +12,6 @@ namespace cprapp.Droid.Helpers.ShakeService
     public class ShakeSpeedEventArgs : EventArgs, IShakeServiceEventArgs
     {
         public double speed { get; set; }
-        //double IShakeServiceEventArgs.speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 
     public class GetShakeSpeed : Java.Lang.Object, IShakeService, Android.Hardware.ISensorEventListener
