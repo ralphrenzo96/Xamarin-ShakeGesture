@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage  NavigationPage.HasNavigationBar = "false" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="cprapp.View.ChallengeResultPage">
 	<StackLayout>
-        <Image x:Name = "imageResult" VerticalOptions = "FillAndExpand"/>
-        <Label x:Name = "labelResult" Text = "Enter Text Here" FontSize = "24" TextColor = "Gray" HorizontalTextAlignment = "Center"/>
-        <Button Text = "Go Back to Main" Clicked = "Handle_Clicked"/>
+        <Image x:Name = "imageResult" VerticalOptions = "FillAndExpand" HeightRequest = "150"/>
+        <Label x:Name = "labelResult" Text = "Enter Text Here" FontSize = "24" TextColor = "Gray" HorizontalTextAlignment = "Center" VerticalOptions = "End"/>
+        <Button Text = "Go Back to Main" Clicked = "Handle_Clicked"  VerticalOptions = "End"/>
     </StackLayout>
 </ContentPage>
