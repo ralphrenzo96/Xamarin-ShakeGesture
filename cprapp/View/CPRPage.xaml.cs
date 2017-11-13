@@ -217,7 +217,7 @@ namespace cprapp.View
         {
             OnActive(false);
             DependencyService.Get<IAudioService>().PlayMP3(5);
-            if (await DisplayActionSheet("CPR Practice", "No", "Yes", "Are you sure you want to quit?") == "Yes")
+            if (await DisplayActionSheet("Are you sure you want to quit?", "No", "Yes") == "Yes")
             {
                 //DependencyService.Get<IStatusBarService>().ShowStatusBar();
                 Processes_Disable();

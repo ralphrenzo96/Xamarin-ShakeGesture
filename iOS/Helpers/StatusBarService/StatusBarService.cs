@@ -1,11 +1,13 @@
 ﻿using System;
+using cprapp.Helpers.StatusBarService;
 using cprapp.iOS.Helpers.StatusBarService;
 using UIKit;
+using Xamarin.Forms;
 
-[assembly: Xamarin.Forms.Dependency(typeof(StatusBarService))]
+[assembly: Dependency(typeof(StatusBarService))]
 namespace cprapp.iOS.Helpers.StatusBarService
 {
-    public class StatusBarService
+    public class StatusBarService : IStatusBarService
     {
 		#region IStatusBar implementation
 

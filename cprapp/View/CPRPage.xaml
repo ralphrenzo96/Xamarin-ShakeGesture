@@ -17,7 +17,7 @@
                 
                 <Frame Margin = "40,0" Padding = "5" Grid.Row = "1" VerticalOptions = "End">
                     <StackLayout Spacing = "0">
-                        <controls:CustomProgressBar Progress = "0" x:Name = "progressBarSpeed" BackgroundColor = "White"/>
+                        <controls:CustomProgressBar Progress = "0" x:Name = "progressBarSpeed" BackgroundColor = "White" HeightRequest = "10"/>
                         <Image Source = "meter" HorizontalOptions = "End" HeightRequest = "50"/>
                     </StackLayout>
                 </Frame>

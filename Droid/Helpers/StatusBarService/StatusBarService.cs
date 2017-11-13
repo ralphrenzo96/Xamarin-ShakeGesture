@@ -5,7 +5,7 @@ using cprapp.Droid.Helpers.StatusBarService;
 using cprapp.Helpers.StatusBarService;
 using Xamarin.Forms;
 
-[assembly: Xamarin.Forms.Dependency(typeof(StatusBarService))]
+[assembly: Dependency(typeof(StatusBarService))]
 namespace cprapp.Droid.Helpers.StatusBarService
 {
     public class StatusBarService : IStatusBarService
