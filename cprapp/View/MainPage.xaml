@@ -3,7 +3,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <Style x:Key = "stackOption" TargetType = "StackLayout">
-                <Setter Property = "Padding" Value = "10,40,10,10"/>
+                <Setter Property = "Padding" Value = "10,20,10,10"/>
 <!--                <Setter Property = "HorizontalOptions" Value = "FillAndExpand"/>-->
                 <Setter Property = "VerticalOptions" Value = "FillAndExpand"/>
             </Style>
@@ -20,11 +20,11 @@
                 <Setter Property = "FontSize" Value = "13"/>
             </Style>
 
-            <Style x:Key = "ButtonType" TargetType = "Button">
-                <Setter Property = "BackgroundColor" Value = "#2D8DD6"/>
+            <Style x:Key = "ButtonStyle" TargetType = "Button">
+                <Setter Property = "BackgroundColor" Value = "Silver"/>
                 <Setter Property = "TextColor" Value = "White"/>
-                <Setter Property = "BorderRadius" Value = "0"/>
                 <Setter Property = "FontSize" Value = "12"/>
+                <Setter Property = "VerticalOptions" Value = "End"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
@@ -33,19 +33,25 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
+
+        <StackLayout Grid.Column = "0" Style = "{StaticResource stackOption}" BackgroundColor = "Gray">
+            <Label Text = "Pass your Highest!" Style = "{StaticResource labelOptionHeader}"/>
+            <Label Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ultrices purus, quis tempus nunc." VerticalOptions = "FillAndExpand" TextColor = "White" HorizontalTextAlignment = "Center"/>
+            <Button Text = "Play" Clicked = "OnClicked_Navigate" Style = "{StaticResource ButtonStyle}" CommandParameter = "1"/>
+        </StackLayout>
         
-        <StackLayout Grid.Column = "0" Style = "{StaticResource stackOption}" BackgroundColor = "#e67e22">
+        <StackLayout Grid.Column = "1" Style = "{StaticResource stackOption}" BackgroundColor = "Gray">
             <Label Text = "Take the Challenge!" Style = "{StaticResource labelOptionHeader}"/>
             <Label Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ultrices purus, quis tempus nunc." VerticalOptions = "FillAndExpand" TextColor = "White" HorizontalTextAlignment = "Center"/>
-            <Button Text = "Challenge" VerticalOptions = "CenterAndExpand" HorizontalOptions = "FillAndExpand" Clicked = "OnClicked_Navigate" CommandParameter = "1"/>
+            <Button Text = "Challenge" Clicked = "OnClicked_Navigate" Style = "{StaticResource ButtonStyle}" CommandParameter = "2"/>
         </StackLayout>
 
-        <StackLayout Grid.Column = "1" Style = "{StaticResource stackOption}" BackgroundColor = "#2c3e50">
+        <StackLayout Grid.Column = "2" Style = "{StaticResource stackOption}" BackgroundColor = "Gray">
             <Label Text = "Train yourself!" Style = "{StaticResource labelOptionHeader}"/>
             <Label Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis ultrices purus, quis tempus nunc." VerticalOptions = "FillAndExpand" TextColor = "White" HorizontalTextAlignment = "Center"/>
-            <Button Text = "Practice" VerticalOptions = "CenterAndExpand" HorizontalOptions = "FillAndExpand" Clicked = "OnClicked_Navigate" CommandParameter = "2"/>
+            <Button Text = "Train" Clicked = "OnClicked_Navigate" Style = "{StaticResource ButtonStyle}" CommandParameter = "3"/>
         </StackLayout>
-        
     </Grid>
 </ContentPage>
