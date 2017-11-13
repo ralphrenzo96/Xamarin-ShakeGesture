@@ -9,7 +9,6 @@ namespace cprapp
         public App()
         {
             InitializeComponent();
-            DependencyService.Get<IStatusBarService>().HideStatusBar();
             MainPage = new NavigationPage(new MainPage());
         }
 

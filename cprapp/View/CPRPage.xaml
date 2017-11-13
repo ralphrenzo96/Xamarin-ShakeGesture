@@ -17,7 +17,9 @@
                 
                 <Frame Margin = "40,0" Padding = "5" Grid.Row = "1" VerticalOptions = "End">
                     <StackLayout Spacing = "0">
-                        <controls:CustomProgressBar Progress = "0" x:Name = "progressBarSpeed" BackgroundColor = "White" HeightRequest = "10"/>
+                        <StackLayout Padding = "0,5">
+                            <controls:CustomProgressBar Progress = "0" x:Name = "progressBarSpeed" BackgroundColor = "White"  MinimumHeightRequest = "20"/>
+                        </StackLayout>
                         <Image Source = "meter" HorizontalOptions = "End" HeightRequest = "50"/>
                     </StackLayout>
                 </Frame>
@@ -74,9 +76,13 @@
             </StackLayout>
         </StackLayout>
 
-        <StackLayout VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" BackgroundColor = "#CC000000" x:Name = "stackPreparation">
+        <StackLayout VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" BackgroundColor = "#D9000000" x:Name = "stackPreparation" Spacing = "10">
+            <Label Text = "Press Start" FontAttributes = "Bold" FontSize = "50" TextColor = "White" VerticalTextAlignment = "Center" HorizontalOptions = "CenterAndExpand" VerticalOptions = "FillAndExpand" x:Name = "labelPressStart"/>
             <Label Text = "5" FontSize = "150" TextColor = "White" VerticalTextAlignment = "Center" HorizontalOptions = "CenterAndExpand" VerticalOptions = "FillAndExpand" x:Name = "labelPrepartion"/>
-            <Button Text = "Start" TextColor = "White" BackgroundColor = "Red" Clicked = "ButtonStart_Clicked" HorizontalOptions = "Center"/>
+            <StackLayout Orientation = "Horizontal" x:Name = "stackButtonsHolder" HorizontalOptions = "CenterAndExpand">
+                <Button Text = "Start" TextColor = "White" BackgroundColor = "Green" Clicked = "ButtonStart_Clicked" HorizontalOptions = "Center"/>
+                <Button Text = "Exit" TextColor = "White" BackgroundColor = "Red" Clicked = "ButtonExit_Clicked" HorizontalOptions = "Center"/>
+            </StackLayout>
         </StackLayout>
     </Grid>
 </ContentPage>

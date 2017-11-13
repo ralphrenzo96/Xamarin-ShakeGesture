@@ -15,28 +15,37 @@ namespace cprapp.iOS.Controls
         protected override void OnElementChanged(ElementChangedEventArgs<ProgressBar> e)
         {
             base.OnElementChanged(e);
-
-			
-
 			if (e.NewElement != null)
 			{
 				DefaultTint();
 				progressBar = (CustomProgressBar)e.NewElement;
+                //Control.TrackTintColor = Color.FromHex("E3E3E3").ToUIColor();
 
 				progressBar.SpeedResetUpdate += ResetTint;
 				progressBar.CurrentSpeedUpdate += ChangeTint;
 			}
+
+            if(e.OldElement != null)
+            {
+				progressBar.SpeedResetUpdate -= ResetTint;
+				progressBar.CurrentSpeedUpdate -= ChangeTint;
+            }
+        }
+
+        public override CGSize SizeThatFits(CGSize size)
+        {
+            return base.SizeThatFits(size);
         }
 
 		public override void LayoutSubviews()
 		{
 			base.LayoutSubviews();
 
-			//var X = 1.0f;
-			//var Y = 10.0f; // This changes the height
+			var X = 1.0f;
+			var Y = 2.0f; //This changes the height
 
-			//CGAffineTransform transform = CGAffineTransform.MakeScale(X, Y);
-            //this.Control.Transform = transform;
+			CGAffineTransform transform = CGAffineTransform.MakeScale(X, Y);
+            this.Control.Transform = transform;
 		}
 
 		private void ResetTint(object sender, bool e)

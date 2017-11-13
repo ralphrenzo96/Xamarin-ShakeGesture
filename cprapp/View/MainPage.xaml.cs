@@ -20,12 +20,10 @@ namespace cprapp.View
 
             switch(Convert.ToInt32(button.CommandParameter.ToString()))
             {
-                case 1: choice = false;
-                break;
-                case 2: choice = true;
-                break;
+				case 1: choice = false; break;
+                case 2: choice = false; break;
+                case 3: choice = true; break;
             }
-
             await Navigation.PushAsync(new CPRPage(choice));
         }
     }
