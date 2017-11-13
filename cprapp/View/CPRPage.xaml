@@ -74,9 +74,13 @@
             </StackLayout>
         </StackLayout>
 
-        <StackLayout VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" BackgroundColor = "#CC000000" x:Name = "stackPreparation">
+        <StackLayout VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" BackgroundColor = "#E6000000" x:Name = "stackPreparation" Spacing = "10">
+            <Label Text = "Press Start" FontAttributes = "Bold" FontSize = "50" TextColor = "White" VerticalTextAlignment = "Center" HorizontalOptions = "CenterAndExpand" VerticalOptions = "FillAndExpand" x:Name = "labelPressStart"/>
             <Label Text = "5" FontSize = "150" TextColor = "White" VerticalTextAlignment = "Center" HorizontalOptions = "CenterAndExpand" VerticalOptions = "FillAndExpand" x:Name = "labelPrepartion"/>
-            <Button Text = "Start" TextColor = "White" BackgroundColor = "Red" Clicked = "ButtonStart_Clicked" HorizontalOptions = "Center"/>
+            <StackLayout Orientation = "Horizontal" x:Name = "stackButtonsHolder" HorizontalOptions = "CenterAndExpand">
+                <Button Text = "Start" TextColor = "White" BackgroundColor = "Green" Clicked = "ButtonStart_Clicked" HorizontalOptions = "Center"/>
+                <Button Text = "Exit" TextColor = "White" BackgroundColor = "Red" Clicked = "ButtonExit_Clicked" HorizontalOptions = "Center"/>
+            </StackLayout>
         </StackLayout>
     </Grid>
 </ContentPage>

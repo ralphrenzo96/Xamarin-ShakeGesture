@@ -31,6 +31,8 @@ namespace cprapp.View
         public CPRPage(bool choosen)
         {
             InitializeComponent();
+            DependencyService.Get<IStatusBarService>().HideStatusBar();
+
             isPractice = choosen;
 
 			if (isPractice)
@@ -39,13 +41,18 @@ namespace cprapp.View
 
         private void ButtonStart_Clicked(object sender, EventArgs e)
         {
-            ((Button)sender).Opacity = 0;
-            ((Button)sender).IsEnabled = false;
+            labelPressStart.IsVisible = stackButtonsHolder.IsVisible = false;
 			prepareTimer.Elapsed += PrepareUser;
             prepareTimer.Start();
             DependencyService.Get<IAudioService>().PlayMP3(6);
+            //labelPrepartion.Text = "5";
+            //labelPrepartion.FontSize = 150.0;
         }
 
+		private async void ButtonExit_Clicked(object sender, EventArgs e)
+		{
+            await Navigation.PopAsync();
+		}
 
         private void PrepareUser(object sender, int e)
         {
