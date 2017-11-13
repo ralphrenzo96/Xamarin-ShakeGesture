@@ -24,9 +24,9 @@ namespace cprapp.Droid.Helpers.ShakeService
 
 		bool hasUpdated = false;
 		DateTime lastUpdate;
-		float last_x = 0.0f;
-		float last_y = 0.0f;
-		float last_z = 0.0f;
+		double last_x = 0.0f;
+		double last_y = 0.0f;
+		double last_z = 0.0f;
 
 		const int ShakeDetectionTimeLapse = 250;
 		const double ShakeThreshold = 100;
@@ -47,9 +47,9 @@ namespace cprapp.Droid.Helpers.ShakeService
 		{
 			if (e.Sensor.Type == Android.Hardware.SensorType.Accelerometer)
 			{
-				float x = e.Values[0];
-				float y = e.Values[1];
-				float z = e.Values[2];
+				double x = e.Values[0];
+				double y = e.Values[1];
+				double z = e.Values[2];
 
 				DateTime curTime = System.DateTime.Now;
 				if (hasUpdated == false)
@@ -64,10 +64,10 @@ namespace cprapp.Droid.Helpers.ShakeService
 				{
 					if ((curTime - lastUpdate).TotalMilliseconds > ShakeDetectionTimeLapse)
 					{
-						float diffTime = (float)(curTime - lastUpdate).TotalMilliseconds;
+						double diffTime = (double)(curTime - lastUpdate).TotalMilliseconds;
 						lastUpdate = curTime;
-						float total = x + y + z - last_x - last_y - last_z;
-						float getSpeed = Math.Abs(total) / diffTime * 10000;
+						double total = x + y + z - last_x - last_y - last_z;
+						double getSpeed = Math.Abs(total) / diffTime * 10000;
 
 						if (getSpeed > ShakeThreshold)
 						{

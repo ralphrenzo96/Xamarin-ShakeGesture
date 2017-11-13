@@ -18,9 +18,7 @@ namespace cprapp.Utilities
 		protected virtual void OnTimerElapsed()
 		{
 			if (Elapsed != null)
-			{
                 Elapsed(this, seconds);
-			}
 		}
 
         public StopWatch()
@@ -40,15 +38,16 @@ namespace cprapp.Utilities
 			while (IsRunning)
 			{
 				if (seconds != 0)
-				{
 					OnTimerElapsed();
-				}
-				await Task.Delay(1000);
 
-				seconds++;
 //#if DEBUG
-//				Debug.WriteLine("[StopWatch.cs] StopWatch Seconds : " + seconds);
+    //Debug.WriteLine("[StopWatch.cs] StopWatch Seconds : " + IsRunning);
 //#endif
+
+				await Task.Delay(1000);
+				seconds++;
+
+
 			}
 		}
 

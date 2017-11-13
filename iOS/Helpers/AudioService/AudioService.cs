@@ -43,7 +43,7 @@ namespace cprapp.iOS.Helpers.AudioService
 					songURL = new NSUrl("raw/dead.mp3");
 					break;
 				case 9:
-					songURL = new NSUrl("raw/seconds.mp3");
+					songURL = new NSUrl("raw/twenty_seconds.mp3");
 					break;
 				case 10:
 					songURL = new NSUrl("raw/countdown.mp3");
